@@ -1,8 +1,7 @@
-from concurrent.futures import ThreadPoolExecutor
-
+import concurrent.futures
 import nacl.utils
 import tornado.web
-from motor import MotorClient
+import motor
 
 from .handlers.check import CheckHandler
 from .handlers.signup import SignupHandler
@@ -26,8 +25,8 @@ class Application(tornado.web.Application):
 
         super(Application, self).__init__(handlers, **settings)
 
-        self.db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
+        self.db = motor.MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
 
-        self.executor = ThreadPoolExecutor(WORKERS)
+        self.executor = concurrent.futures.ThreadPoolExecutor(WORKERS)
 
         self.hmac_key = nacl.utils.random(size=APP_SECRETKEY_SIZE)

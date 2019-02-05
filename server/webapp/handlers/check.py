@@ -1,6 +1,4 @@
-from time import mktime
-from datetime import datetime
-
+import datetime
 import tornado.gen
 
 from .base import BaseHandler
@@ -9,7 +7,7 @@ class TokenAuthHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def prepare(self):
-        now = mktime(datetime.now().utctimetuple())
+        now = mktime(datetime.datetime.now().utctimetuple())
 
         try:
             token = self.get_argument('token')

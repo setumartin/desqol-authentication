@@ -1,22 +1,20 @@
-from uuid import uuid4
-from time import mktime
-from datetime import datetime, timedelta
-
+import datetime
 import nacl.hash
 import nacl.pwhash
-
+import time
 import tornado.gen
+import uuid
 
 from .base import BaseHandler
 
-class TokenBaseHandler(BaseHandler):
+class TokenHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def generate_token(self, username):
-        token = uuid4().hex
+        token = uuid.uuid4().hex
         token_hash = nacl.hash.blake2b(token.encode(), key=self.hmac_key)
-        expires_in = datetime.now() + timedelta(hours=2)
-        expires_in = mktime(expires_in.utctimetuple())
+        expires_in = datetime.datetime.now() + datetime.timedelta(hours=2)
+        expires_in = time.mktime(expires_in.utctimetuple())
 
         token = {
             'token': token_hash.decode("utf-8"),
@@ -28,19 +26,19 @@ class TokenBaseHandler(BaseHandler):
 
         return token
 
-
-class TokenHandler(TokenBaseHandler):
-
     @tornado.gen.coroutine
     def post(self):
-        username = self.get_argument('username')
-        password = self.get_argument('password')
+        try:
+            username = self.get_argument('username')
+            password = self.get_argument('password')
+        except tornado.web.MissingArgumentError:
+            self.send_error(400, message='You must provide a username and password!')
+            return
 
         user = yield self.db.users.find_one({'username': username})
 
         if user is None:
-            self.set_status(403)
-            self.finish()
+            self.send_error(403, message='The username and/or password is incorrect!')
             return
 
         try:
@@ -50,9 +48,12 @@ class TokenHandler(TokenBaseHandler):
                 tornado.escape.utf8(password)
             )
         except nacl.exceptions.InvalidkeyError:
-            self.set_status(403)
-            self.finish()
+            self.send_error(403, message='The username and/or password is incorrect!')
             return
 
-        user_tokens = yield self.generate_token(username)
-        self.write(user_tokens)
+        token = yield self.generate_token(username)
+
+        self.set_status(200)
+        self.response['token'] = token['token']
+        self.response['expiresIn'] = token['expires_in']
+        self.write_json()
