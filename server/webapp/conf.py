@@ -1,5 +1,5 @@
 HOST = 'localhost'
-PORT = 8000
+PORT = 4000
 
 MONGODB_HOST = {
     'host': 'localhost',

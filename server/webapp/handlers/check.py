@@ -1,6 +1,8 @@
 from time import mktime
 from datetime import datetime
 
+import tornado.gen
+
 from .base import BaseHandler
 
 class TokenAuthHandler(BaseHandler):
