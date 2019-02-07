@@ -102,7 +102,7 @@ RecoverPassword.defaultProps = {
     console.log('Handle recover password...');
   },
   // styles
-  styles: {},
+  styles: {}
 };
 
 export default RecoverPassword;
