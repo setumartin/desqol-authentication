@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './App.css';
 
-import Signup from './components/Signup'
+import Signup from './components/Signup';
+import Login from './components/Login';
 
 class App extends Component {
   render() {
     return (
-      <Signup />
+      <Fragment>
+        <Signup />
+        <hr />
+        <Login />
+      </Fragment>
     );
   }
 }
