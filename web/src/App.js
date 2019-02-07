@@ -3,6 +3,7 @@ import './App.css';
 
 import Signup from './components/Signup';
 import Login from './components/Login';
+import RecoverPassword from './components/RecoverPassword';
 
 class App extends Component {
   render() {
@@ -11,6 +12,8 @@ class App extends Component {
         <Signup />
         <hr />
         <Login />
+        <hr />
+        <RecoverPassword />
       </Fragment>
     );
   }

@@ -128,16 +128,16 @@ Login.defaultProps = {
   submitLoginCustomLabel: 'Login',
   // handlers
   handleShowSignup: (e) => {
-    console.log('HANDLE SHOW SIGNUP...');
+    console.log('Handle show signup...');
   },
   handleShowRecover: (e) => {
-    console.log('HANDLE SHOW RECOVER...');
+    console.log('Handle show recover...');
   },
   handleLogin: (e) => {
-    console.log('HANDLE LOGIN...');
+    console.log('Handle login...');
   },
   handleChange: (e) => {
-    console.log('HANDLE CHANGE...');
+    console.log('Handle change...');
   },
   // styles
   styles: {}

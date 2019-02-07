@@ -10,31 +10,27 @@ const localStyles = {
   },
   input: {
   },
-  recoverPassword: {
-  },
   button: {
   },
 };
 
-const Signup = ({
-  // labels, etc.
+const RecoverPassword = ({
+  // labels
   usernameCustomLabel,
-  passwordCustomLabel,
-  passwordConfirmationCustomLabel,
   goToLoginCustomLabel,
-  submitSignupCustomLabel,
+  submitRecoverPasswordCustomLabel,
   // fields
   username,
-  password,
-  passwordConfirmation,
   // handlers
   handleShowLogin,
-  handleSignup,
   handleChange,
+  handleRecoverPassword,
   // styles
   styles
 }) => (
-  <section style={Object.assign({}, localStyles.wrapper, styles.wrapper)}>
+  <section
+    style={Object.assign({}, localStyles.wrapper, styles.wrapper)}
+  >
     <div style={Object.assign({}, localStyles.inputWrapper, styles.inputWrapper)}>
       <input
         style={Object.assign({}, localStyles.input, styles.input)}
@@ -45,24 +41,6 @@ const Signup = ({
         onChange={e => handleChange(e.target.name, e.target.value)}
         value={username}
       />
-      <input
-        style={Object.assign({}, localStyles.input, styles.input)}
-        type="password"
-        id="password"
-        name="password"
-        placeholder={passwordCustomLabel}
-        onChange={e => handleChange(e.target.name, e.target.value)}
-        value={password}
-      />
-      <input
-        style={Object.assign({}, localStyles.input, styles.input)}
-        type="password"
-        id="passwordConfirmation"
-        name="passwordConfirmation"
-        placeholder={passwordConfirmationCustomLabel}
-        onChange={e => handleChange(e.target.name, e.target.value)}
-        value={passwordConfirmation}
-      />
     </div>
     <div style={Object.assign({}, localStyles.buttonsWrapper, styles.buttonsWrapper)}>
       <button
@@ -70,68 +48,61 @@ const Signup = ({
         type="button"
         style={Object.assign({}, localStyles.button, styles.button)}
         onClick={() => {
-          handleShowLogin('isLogin', true);
+          handleShowLogin('isRecoveringPassword', false);
         }}
       >
         {goToLoginCustomLabel}
       </button>
       <input
-        id="submit-signup"
+        id="submit-recover-password"
+        name="submit-recover-password"
         type="submit"
-        value={submitSignupCustomLabel}
+        value={submitRecoverPasswordCustomLabel}
         style={Object.assign({}, localStyles.button, styles.button)}
-        onClick={handleSignup}
+        onClick={handleRecoverPassword}
       />
     </div>
   </section>
 );
 
-Signup.propTypes = {
+RecoverPassword.propTypes = {
   // labels
   usernameCustomLabel: PropTypes.string.isRequired,
-  passwordCustomLabel: PropTypes.string.isRequired,
-  passwordConfirmationCustomLabel: PropTypes.string.isRequired,
   goToLoginCustomLabel: PropTypes.string.isRequired,
-  submitSignupCustomLabel: PropTypes.string.isRequired,
+  submitRecoverPasswordCustomLabel: PropTypes.string.isRequired,
   // fields
   username: PropTypes.string,
-  password: PropTypes.string,
-  passwordConfirmation: PropTypes.string,
   // handlers
   handleShowLogin: PropTypes.func.isRequired,
-  handleSignup: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleRecoverPassword: PropTypes.func.isRequired,
   // styles
   styles: PropTypes.shape({
     wrapper: PropTypes.object,
     inputWrapper: PropTypes.object,
     buttonsWrapper: PropTypes.object,
     input: PropTypes.object,
-    recoverPassword: PropTypes.object,
     button: PropTypes.object,
-  }),
-
+  })
 };
 
-Signup.defaultProps = {
+RecoverPassword.defaultProps = {
   // labels
   usernameCustomLabel: 'Username',
-  passwordCustomLabel: 'Password',
-  passwordConfirmationCustomLabel: 'Confirm Password',
   goToLoginCustomLabel: 'Go to Login Instead',
-  submitSignupCustomLabel: 'Signup',
+  submitRecoverPasswordCustomLabel: 'Recover Password',
   // handlers
   handleShowLogin: (e) => {
     console.log('Handle show login...');
   },
-  handleSignup: (e) => {
-    console.log('Handle signup...');
-  },
   handleChange: (e) => {
     console.log('Handle change...');
+  },
+  handleRecoverPassword: (e) => {
+    console.log('Handle recover password...');
   },
   // styles
   styles: {},
 };
 
-export default Signup;
+export default RecoverPassword;
