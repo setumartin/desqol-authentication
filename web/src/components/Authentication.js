@@ -5,7 +5,7 @@ import Login from './Login';
 import Signup from './Signup';
 import RecoverPassword from './RecoverPassword';
 
-class AuthenticationComponent extends React.Component {
+class Authentication extends React.Component {
   constructor(props) {
     super(props);
     
@@ -119,7 +119,7 @@ class AuthenticationComponent extends React.Component {
   }
 }
 
-AuthenticationComponent.propTypes = {
+Authentication.propTypes = {
   // labels
   title: PropTypes.string,
   usernameCustomLabel: PropTypes.string,
@@ -170,7 +170,7 @@ AuthenticationComponent.propTypes = {
   })
 };
 
-AuthenticationComponent.defaultProps = {
+Authentication.defaultProps = {
   // labels
   title: 'Erasmus+ DESQOL Project',
   // fields
@@ -190,4 +190,4 @@ AuthenticationComponent.defaultProps = {
   styles: {}
 };
 
-export default AuthenticationComponent;
+export default Authentication;
