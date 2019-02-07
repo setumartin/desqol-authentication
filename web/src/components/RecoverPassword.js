@@ -11,7 +11,7 @@ const localStyles = {
   input: {
   },
   button: {
-  },
+  }
 };
 
 const RecoverPassword = ({
@@ -30,7 +30,7 @@ const RecoverPassword = ({
 }) => (
   <section
     style={Object.assign({}, localStyles.wrapper, styles.wrapper)}
-  >
+    >
     <div style={Object.assign({}, localStyles.inputWrapper, styles.inputWrapper)}>
       <input
         style={Object.assign({}, localStyles.input, styles.input)}
@@ -40,7 +40,7 @@ const RecoverPassword = ({
         placeholder={usernameCustomLabel}
         onChange={e => handleChange(e.target.name, e.target.value)}
         value={username}
-      />
+        />
     </div>
     <div style={Object.assign({}, localStyles.buttonsWrapper, styles.buttonsWrapper)}>
       <button
@@ -50,7 +50,7 @@ const RecoverPassword = ({
         onClick={() => {
           handleShowLogin('isRecoveringPassword', false);
         }}
-      >
+        >
         {goToLoginCustomLabel}
       </button>
       <input
@@ -60,7 +60,7 @@ const RecoverPassword = ({
         value={submitRecoverPasswordCustomLabel}
         style={Object.assign({}, localStyles.button, styles.button)}
         onClick={handleRecoverPassword}
-      />
+        />
     </div>
   </section>
 );
@@ -82,7 +82,7 @@ RecoverPassword.propTypes = {
     inputWrapper: PropTypes.object,
     buttonsWrapper: PropTypes.object,
     input: PropTypes.object,
-    button: PropTypes.object,
+    button: PropTypes.object
   })
 };
 

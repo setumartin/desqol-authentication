@@ -4,23 +4,30 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-import { Button, Welcome } from '@storybook/react/demo';
-
 import Authentication from '../components/Authentication';
-
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
-
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => (
-    <Button onClick={action('clicked')}>
-      <span role="img" aria-label="so cool">
-        😀 😎 👍 💯
-      </span>
-    </Button>
-  ));
 
 storiesOf('Authentication', module)
   .add('with default behaviour', () => (
-    <Authentication />
+    <Authentication
+      handleSignup={action('handleSignup')}
+      handleLogin={action('handleLogin')}
+      handleRecoverPassword={action('handleRecoverPassword')}
+      />
+  ))
+  .add('with Esperanto', () => (
+    <Authentication
+      title='Projekto Erasmus + DESQOL'
+      usernameCustomLabel='Uzulnomo'
+      passwordCustomLabel='Pasvorto'
+      passwordConfirmationCustomLabel='Konfirmu pasvorton'
+      recoverPasswordCustomLabel='Retrovu Pasvorton'
+      goToSignupCustomLabel='Iru al Subskriba Instead'
+      submitLoginCustomLabel='Ensaluti'
+      goToLoginCustomLabel='Iru al Salutnomo Anstataŭe'
+      submitSignupCustomLabel='Subskriba'
+      submitRecoverPasswordCustomLabel='Retrovu Pasvorton'
+      handleSignup={action('handleSignup')}
+      handleLogin={action('handleLogin')}
+      handleRecoverPassword={action('handleRecoverPassword')}
+      />
   ));

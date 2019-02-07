@@ -13,7 +13,7 @@ const localStyles = {
   recoverPassword: {
   },
   button: {
-  },
+  }
 };
 
 const Signup = ({
@@ -44,25 +44,25 @@ const Signup = ({
         placeholder={usernameCustomLabel}
         onChange={e => handleChange(e.target.name, e.target.value)}
         value={username}
-      />
-      <input
-        style={Object.assign({}, localStyles.input, styles.input)}
-        type="password"
-        id="password"
-        name="password"
-        placeholder={passwordCustomLabel}
-        onChange={e => handleChange(e.target.name, e.target.value)}
-        value={password}
-      />
-      <input
-        style={Object.assign({}, localStyles.input, styles.input)}
-        type="password"
-        id="passwordConfirmation"
-        name="passwordConfirmation"
-        placeholder={passwordConfirmationCustomLabel}
-        onChange={e => handleChange(e.target.name, e.target.value)}
-        value={passwordConfirmation}
-      />
+        />
+        <input
+          style={Object.assign({}, localStyles.input, styles.input)}
+          type="password"
+          id="password"
+          name="password"
+          placeholder={passwordCustomLabel}
+          onChange={e => handleChange(e.target.name, e.target.value)}
+          value={password}
+          />
+          <input
+            style={Object.assign({}, localStyles.input, styles.input)}
+            type="password"
+            id="passwordConfirmation"
+            name="passwordConfirmation"
+            placeholder={passwordConfirmationCustomLabel}
+            onChange={e => handleChange(e.target.name, e.target.value)}
+            value={passwordConfirmation}
+            />
     </div>
     <div style={Object.assign({}, localStyles.buttonsWrapper, styles.buttonsWrapper)}>
       <button
@@ -72,7 +72,7 @@ const Signup = ({
         onClick={() => {
           handleShowLogin('isLogin', true);
         }}
-      >
+        >
         {goToLoginCustomLabel}
       </button>
       <input
@@ -81,7 +81,7 @@ const Signup = ({
         value={submitSignupCustomLabel}
         style={Object.assign({}, localStyles.button, styles.button)}
         onClick={handleSignup}
-      />
+        />
     </div>
   </section>
 );
@@ -109,8 +109,7 @@ Signup.propTypes = {
     input: PropTypes.object,
     recoverPassword: PropTypes.object,
     button: PropTypes.object,
-  }),
-
+  })
 };
 
 Signup.defaultProps = {
@@ -131,7 +130,7 @@ Signup.defaultProps = {
     console.log('Handle change...');
   },
   // styles
-  styles: {},
+  styles: {}
 };
 
 export default Signup;

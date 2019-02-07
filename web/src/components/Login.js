@@ -13,7 +13,7 @@ const localStyles = {
   recoverPassword: {
   },
   button: {
-  },
+  }
 };
 
 const Login = ({
@@ -44,21 +44,21 @@ const Login = ({
         placeholder={usernameCustomLabel}
         onChange={e => handleChange(e.target.name, e.target.value)}
         value={username}
-      />
-      <input
-        style={Object.assign({}, localStyles.input, styles.input)}
-        type="password"
-        id="password"
-        name="password"
-        placeholder={passwordCustomLabel}
-        onChange={e => handleChange(e.target.name, e.target.value)}
-        value={password}
-      />
+        />
+        <input
+          style={Object.assign({}, localStyles.input, styles.input)}
+          type="password"
+          id="password"
+          name="password"
+          placeholder={passwordCustomLabel}
+          onChange={e => handleChange(e.target.name, e.target.value)}
+          value={password}
+          />
     </div>
     <div style={Object.assign({}, localStyles.buttonsWrapper, styles.buttonsWrapper)}>
       <div
         style={Object.assign({}, localStyles.recoverPasswordWrapper, styles.recoverPasswordWrapper)}
-      >
+        >
         <button
           id="recorver-password"
           type="button"
@@ -66,7 +66,7 @@ const Login = ({
           onClick={() => {
             handleShowRecover('isRecoveringPassword', true);
           }}
-        >
+          >
           {recoverPasswordCustomLabel}
         </button>
       </div>
@@ -77,7 +77,7 @@ const Login = ({
         onClick={() => {
           handleShowSignup('isLogin', false);
         }}
-      >
+        >
         {goToSignupCustomLabel}
       </button>
       <input
@@ -87,7 +87,7 @@ const Login = ({
         type="submit"
         style={Object.assign({}, localStyles.button, styles.button)}
         onClick={handleLogin}
-      />
+        />
     </div>
   </section>
 );
@@ -115,7 +115,7 @@ Login.propTypes = {
     input: PropTypes.object,
     recoverPasswordWrapper: PropTypes.object,
     recoverPasswordButton: PropTypes.object,
-    button: PropTypes.object,
+    button: PropTypes.object
   })
 };
 

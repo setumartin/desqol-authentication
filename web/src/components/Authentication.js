@@ -8,7 +8,7 @@ import RecoverPassword from './RecoverPassword';
 class Authentication extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.updateState = this.updateState.bind(this);
     this.bubbleUpLogin = this.bubbleUpLogin.bind(this);
     this.bubbleUpSignup = this.bubbleUpSignup.bind(this);
@@ -19,18 +19,18 @@ class Authentication extends React.Component {
       isRecoveringPassword: this.props.isRecoveringPassword,
       username: '',
       password: '',
-      passwordConfirmation: '',
+      passwordConfirmation: ''
     };
   }
 
   updateState(key, value) {
     this.setState({ [key]: value });
   }
-  
+
   bubbleUpLogin() {
     this.props.handleLogin({
       username: this.state.username,
-      password: this.state.password,
+      password: this.state.password
     });
   }
 
@@ -38,13 +38,13 @@ class Authentication extends React.Component {
     this.props.handleSignup({
       username: this.state.username,
       password: this.state.password,
-      passwordConfirmation: this.state.passwordConfirmation,
+      passwordConfirmation: this.state.passwordConfirmation
     });
   }
 
   bubbleUpRecoverPassword() {
     this.props.handleRecoverPassword({
-      username: this.state.username,
+      username: this.state.username
     });
   }
 
@@ -55,8 +55,7 @@ class Authentication extends React.Component {
       title: {
       },
       flipper: {
-
-      },
+      }
     };
     const showCard = () => {
       if (this.state.isLogin && !this.state.isRecoveringPassword) {
@@ -74,7 +73,7 @@ class Authentication extends React.Component {
             handleLogin={this.bubbleUpLogin}
             handleChange={this.updateState}
             styles={this.props.styles.login}
-          />
+            />
         );
       } else if (!this.state.isLogin && !this.state.isRecoveringPassword) {
         return (
@@ -91,7 +90,7 @@ class Authentication extends React.Component {
             handleSignup={this.bubbleUpSignup}
             handleChange={this.updateState}
             styles={this.props.styles.signup}
-          />
+            />
         );
       }
       return (
@@ -104,14 +103,14 @@ class Authentication extends React.Component {
           handleRecoverPassword={this.bubbleUpRecoverPassword}
           handleChange={this.updateState}
           styles={this.props.styles.recoverPassword}
-        />
+          />
       );
     };
     return (
       <section
         id="main-wrapper"
         style={Object.assign(styles.wrapper, this.props.styles.mainWrapper)}
-      >
+        >
         <h1 style={Object.assign(styles.title, this.props.styles.mainTitle)}>{this.props.title}</h1>
         <div style={Object.assign(styles.flipper, this.props.styles.flipper)}>{showCard()}</div>
       </section>
@@ -149,7 +148,7 @@ Authentication.propTypes = {
       buttonsWrapper: PropTypes.object,
       input: PropTypes.object,
       recoverPassword: PropTypes.object,
-      button: PropTypes.object,
+      button: PropTypes.object
     }),
     login: PropTypes.shape({
       wrapper: PropTypes.object,
@@ -158,14 +157,14 @@ Authentication.propTypes = {
       input: PropTypes.object,
       recoverPasswordWrapper: PropTypes.object,
       recoverPasswordButton: PropTypes.object,
-      button: PropTypes.object,
+      button: PropTypes.object
     }),
     recoverPassword: PropTypes.shape({
       wrapper: PropTypes.object,
       inputWrapper: PropTypes.object,
       buttonsWrapper: PropTypes.object,
       input: PropTypes.object,
-      button: PropTypes.object,
+      button: PropTypes.object
     }),
   })
 };
