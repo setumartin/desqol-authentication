@@ -6,7 +6,7 @@ MONGODB_HOST = {
     'port': 27017
 }
 
-MONGODB_DBNAME = 'desqol-auth'
+MONGODB_DBNAME = 'auth'
 
 APP_SECRETKEY_SIZE = 64
 
