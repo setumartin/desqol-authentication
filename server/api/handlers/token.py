@@ -11,8 +11,8 @@ class TokenHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def generate_token(self, username):
-        token = uuid.uuid4().hex
-        token_hash = nacl.hash.blake2b(token.encode(), key=self.hmac_key)
+        token_uuid = uuid.uuid4().hex
+        token_hash = nacl.hash.blake2b(token_uuid.encode(), key=self.hmac_key)
         expires_in = datetime.datetime.now() + datetime.timedelta(hours=2)
         expires_in = time.mktime(expires_in.utctimetuple())
 
@@ -27,7 +27,7 @@ class TokenHandler(BaseHandler):
         return token
 
     @tornado.gen.coroutine
-    def post(self):
+    def get(self):
         try:
             username = self.get_argument('username')
             password = self.get_argument('password')

@@ -35,7 +35,7 @@ class AuthHandler(BaseHandler):
             'username': user_dct['username']
         }
 
-class CheckHandler(AuthHandler):
+class ProfileHandler(AuthHandler):
 
     @tornado.web.authenticated
     def get(self):

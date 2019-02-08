@@ -3,9 +3,10 @@ import nacl.utils
 import tornado.web
 import motor
 
-from .handlers.check import CheckHandler
 from .handlers.signup import SignupHandler
 from .handlers.token import TokenHandler
+from .handlers.profile import ProfileHandler
+from .handlers.recovery import RecoveryHandler
 
 from .conf import (MONGODB_HOST, MONGODB_DBNAME, APP_SECRETKEY_SIZE, WORKERS)
 
@@ -16,7 +17,8 @@ class Application(tornado.web.Application):
         handlers = [
             (r'/api/signup', SignupHandler),
             (r'/api/token', TokenHandler),
-            (r'/api/check', CheckHandler)
+            (r'/api/profile', ProfileHandler),
+            (r'/api/recovery', RecoveryHandler)
         ]
 
         settings = dict(
