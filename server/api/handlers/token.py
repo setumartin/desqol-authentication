@@ -28,12 +28,13 @@ class TokenHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def get(self):
-        try:
-            username = self.get_argument('username')
-            password = self.get_argument('password')
-        except tornado.web.MissingArgumentError:
-            self.send_error(400, message='You must provide a username and password!')
-            return
+        if self.request.body:
+          body = tornado.escape.json_decode(self.request.body)
+          username = body['username']
+          password = body['password']
+        else:
+          self.send_error(400, message='You must provide a username and password!')
+          return
 
         user = yield self.db.users.find_one({'username': username})
 

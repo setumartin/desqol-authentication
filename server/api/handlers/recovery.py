@@ -26,11 +26,12 @@ class RecoveryHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def get(self):
-        try:
-            username = self.get_argument('username')
-        except tornado.web.MissingArgumentError:
-            self.send_error(400, message='You must provide a username!')
-            return
+        if self.request.body:
+          body = tornado.escape.json_decode(self.request.body)
+          username = body['username']
+        else:
+          self.send_error(400, message='You must provide a username!')
+          return
 
         user = yield self.db.users.find_one({'username': username})
 
@@ -48,12 +49,13 @@ class RecoveryHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def post(self):
-        try:
-            token = self.get_argument('token')
-            password = self.get_argument('password')
-        except tornado.web.MissingArgumentError:
-            self.send_error(400, message='You must provide a token and password!')
-            return
+        if self.request.body:
+          body = tornado.escape.json_decode(self.request.body)
+          token = body['token']
+          password = body['password']
+        else:
+          self.send_error(400, message='You must provide a token and password!')
+          return
 
         user = yield self.db.users.find_one({'recovery_token': token})
 
@@ -70,6 +72,7 @@ class RecoveryHandler(BaseHandler):
             'recovery_token': token
         }, {
             '$set': {
+              'token': None,
               'recovery_token': None,
               'password_hash': password_hash
             }

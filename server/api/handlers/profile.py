@@ -10,29 +10,32 @@ class AuthHandler(BaseHandler):
     def prepare(self):
         super(AuthHandler, self).prepare()
 
-        now = time.mktime(datetime.datetime.now().utctimetuple())
-        try:
-            token = self.get_argument('token')
-        except tornado.web.MissingArgumentError:
-            self.current_user = None
-            self.send_error(400, message='You must provide a token!')
-            return
+        token = self.request.headers.get('X-Token')
+        if token is None:
+          self.current_user = None
+          self.send_error(400, message='You must provide a token!')
+          return
 
-        user_dct = yield self.db.users.find_one({'token': token},
-                                                {'username': 1, 'expires_in': 1})
+        user = yield self.db.users.find_one({
+          'token': token
+        }, {
+          'username': 1,
+          'expires_in': 1
+        })
 
-        if not user_dct:
+        if user is None:
             self.current_user = None
             self.send_error(403, message='Invalid token!')
             return
 
-        if now > user_dct['expires_in']:
+        now = time.mktime(datetime.datetime.now().utctimetuple())
+        if now > user['expires_in']:
             self.current_user = None
             self.send_error(403, message='Expired token!')
             return
 
         self.current_user = {
-            'username': user_dct['username']
+            'username': user['username']
         }
 
 class ProfileHandler(AuthHandler):
