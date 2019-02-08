@@ -10,12 +10,12 @@ class SignupHandler(BaseHandler):
     @tornado.gen.coroutine
     def post(self):
         if self.request.body:
-          body = tornado.escape.json_decode(self.request.body)
-          username = body['username']
-          password = body['password']
+            body = tornado.escape.json_decode(self.request.body)
+            username = body['username']
+            password = body['password']
         else:
-          self.send_error(400, message='You must provide a username and password!')
-          return
+            self.send_error(400, message='You must provide a username and password!')
+            return
 
         user = yield self.db.users.find_one({'username': username})
 

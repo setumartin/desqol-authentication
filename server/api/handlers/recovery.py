@@ -12,14 +12,14 @@ class RecoveryHandler(BaseHandler):
         recovery_token_uuid = uuid.uuid4().hex
         recovery_token_hash = nacl.hash.blake2b(recovery_token_uuid.encode(), key=self.hmac_key)
 
-        recovery_token = recovery_token_hash.decode("utf-8")
+        recovery_token = recovery_token_hash.decode('utf-8')
 
         yield self.db.users.update_one({
-          'username': username
+            'username': username
         }, {
-          '$set': {
-            'recovery_token': recovery_token
-          }
+            '$set': {
+                'recovery_token': recovery_token
+            }
         })
 
         return recovery_token
@@ -27,11 +27,11 @@ class RecoveryHandler(BaseHandler):
     @tornado.gen.coroutine
     def get(self):
         if self.request.body:
-          body = tornado.escape.json_decode(self.request.body)
-          username = body['username']
+            body = tornado.escape.json_decode(self.request.body)
+            username = body['username']
         else:
-          self.send_error(400, message='You must provide a username!')
-          return
+            self.send_error(400, message='You must provide a username!')
+            return
 
         user = yield self.db.users.find_one({'username': username})
 
@@ -50,12 +50,12 @@ class RecoveryHandler(BaseHandler):
     @tornado.gen.coroutine
     def post(self):
         if self.request.body:
-          body = tornado.escape.json_decode(self.request.body)
-          token = body['token']
-          password = body['password']
+            body = tornado.escape.json_decode(self.request.body)
+            token = body['token']
+            password = body['password']
         else:
-          self.send_error(400, message='You must provide a token and password!')
-          return
+            self.send_error(400, message='You must provide a token and password!')
+            return
 
         user = yield self.db.users.find_one({'recovery_token': token})
 
@@ -67,14 +67,14 @@ class RecoveryHandler(BaseHandler):
             nacl.pwhash.str,
             tornado.escape.utf8(password)
         )
-        
+
         yield self.db.users.update_one({
             'recovery_token': token
         }, {
             '$set': {
-              'token': None,
-              'recovery_token': None,
-              'password_hash': password_hash
+                'token': None,
+                'recovery_token': None,
+                'password_hash': password_hash
             }
         })
 

@@ -17,24 +17,27 @@ class TokenHandler(BaseHandler):
         expires_in = time.mktime(expires_in.utctimetuple())
 
         token = {
-            'token': token_hash.decode("utf-8"),
+            'token': token_hash.decode('utf-8'),
             'expires_in': expires_in,
         }
 
-        yield self.db.users.update_one({'username': username},
-                                       {'$set': token})
+        yield self.db.users.update_one({
+          'username': username
+        }, {
+          '$set': token
+        })
 
         return token
 
     @tornado.gen.coroutine
     def get(self):
         if self.request.body:
-          body = tornado.escape.json_decode(self.request.body)
-          username = body['username']
-          password = body['password']
+            body = tornado.escape.json_decode(self.request.body)
+            username = body['username']
+            password = body['password']
         else:
-          self.send_error(400, message='You must provide a username and password!')
-          return
+            self.send_error(400, message='You must provide a username and password!')
+            return
 
         user = yield self.db.users.find_one({'username': username})
 

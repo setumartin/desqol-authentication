@@ -22,7 +22,7 @@ To create the collection in MongoDB:
 ```
 mongo mongodb://localhost:27017
 > use auth;
-> db.createCollection("users");
+> db.createCollection('users');
 ````
 
 To start the server:
