@@ -7,7 +7,7 @@ import uuid
 
 from .base import BaseHandler
 
-class TokenHandler(BaseHandler):
+class LoginHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def generate_token(self, username):
@@ -30,7 +30,7 @@ class TokenHandler(BaseHandler):
         return token
 
     @tornado.gen.coroutine
-    def get(self):
+    def post(self):
         if self.request.body:
             body = tornado.escape.json_decode(self.request.body)
             username = body['username']

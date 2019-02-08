@@ -3,10 +3,12 @@ import nacl.utils
 import tornado.web
 import motor
 
-from .handlers.signup import SignupHandler
-from .handlers.token import TokenHandler
-from .handlers.profile import ProfileHandler
-from .handlers.recovery import RecoveryHandler
+from .handlers.registration import RegistrationHandler
+from .handlers.login import LoginHandler
+from .handlers.logout import LogoutHandler
+from .handlers.user import UserHandler
+from .handlers.pwreset import PasswordResetHandler
+from .handlers.pwconfirm import PasswordResetConfirmHandler
 
 from .conf import (MONGODB_HOST, MONGODB_DBNAME, APP_SECRETKEY_SIZE, WORKERS)
 
@@ -15,10 +17,12 @@ class Application(tornado.web.Application):
     def __init__(self):
 
         handlers = [
-            (r'/api/signup', SignupHandler),
-            (r'/api/token', TokenHandler),
-            (r'/api/profile', ProfileHandler),
-            (r'/api/recovery', RecoveryHandler)
+            (r'/api/registration', RegistrationHandler),
+            (r'/api/login', LoginHandler),
+            (r'/api/logout', LogoutHandler),
+            (r'/api/user', UserHandler),
+            (r'/api/password/reset', PasswordResetHandler),
+            (r'/api/password/reset/confirm', PasswordResetConfirmHandler)
         ]
 
         settings = dict(

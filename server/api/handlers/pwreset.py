@@ -1,11 +1,10 @@
 import nacl.hash
-import nacl.pwhash
 import tornado.gen
 import uuid
 
 from .base import BaseHandler
 
-class RecoveryHandler(BaseHandler):
+class PasswordResetHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def generate_recovery_token(self, username):
@@ -25,7 +24,7 @@ class RecoveryHandler(BaseHandler):
         return recovery_token
 
     @tornado.gen.coroutine
-    def get(self):
+    def post(self):
         if self.request.body:
             body = tornado.escape.json_decode(self.request.body)
             username = body['username']
@@ -45,38 +44,4 @@ class RecoveryHandler(BaseHandler):
 
         self.set_status(200)
         self.response['_token'] = recovery_token
-        self.write_json()
-
-    @tornado.gen.coroutine
-    def post(self):
-        if self.request.body:
-            body = tornado.escape.json_decode(self.request.body)
-            token = body['token']
-            password = body['password']
-        else:
-            self.send_error(400, message='You must provide a token and password!')
-            return
-
-        user = yield self.db.users.find_one({'recovery_token': token})
-
-        if user is None:
-            self.send_error(403, message='The token is incorrect!')
-            return
-
-        password_hash = yield self.executor.submit(
-            nacl.pwhash.str,
-            tornado.escape.utf8(password)
-        )
-
-        yield self.db.users.update_one({
-            'recovery_token': token
-        }, {
-            '$set': {
-                'token': None,
-                'recovery_token': None,
-                'password_hash': password_hash
-            }
-        })
-
-        self.set_status(200)
         self.write_json()

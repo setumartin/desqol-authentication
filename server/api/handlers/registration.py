@@ -5,7 +5,7 @@ import tornado.gen
 
 from .base import BaseHandler
 
-class SignupHandler(BaseHandler):
+class RegistrationHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def post(self):
