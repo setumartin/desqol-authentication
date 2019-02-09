@@ -124,7 +124,7 @@ Authentication.defaultProps = {
   // labels
   title: 'Welcome',
   // fields
-  isLogin: true,
+  isLogin: false,
   isRecoveringPassword: false,
   // handlers
   handleRegister: (e) => {

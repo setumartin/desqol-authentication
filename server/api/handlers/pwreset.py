@@ -39,7 +39,7 @@ class PasswordResetHandler(BaseHandler):
 
         if user is None:
             self.set_status(200)
-            self.response['_url'] = nil
+            self.response['_url'] = None
             self.write_json()
             return
 

@@ -34,11 +34,40 @@ const register = (e, success, failure) => {
 };
 
 const login = (e, success, failure) => {
-  console.log(e);
+  const body = {
+    username: e['username'],
+    password: e['password']
+  };
+  fetch(API + '/login', Object.assign(FETCH_CONFIG, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  }))
+  .then(response => {
+    if (response.status === 200) {
+      response.json().then(success);
+    } else {
+      response.json().then(failure);
+    }
+  })
+  .catch(error => failure(error));
 };
 
 const recover = (e, success, failure) => {
-  console.log(e);
+  const body = {
+    username: e['username']
+  };
+  fetch(API + '/password/reset', Object.assign(FETCH_CONFIG, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  }))
+  .then(response => {
+    if (response.status === 200) {
+      response.json().then(success);
+    } else {
+      response.json().then(failure);
+    }
+  })
+  .catch(error => failure(error));
 };
 
 const WiredAuthentication = ({
