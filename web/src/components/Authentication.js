@@ -147,7 +147,7 @@ Authentication.propTypes = {
 
 Authentication.defaultProps = {
   // labels
-  title: 'Erasmus+ DESQOL Project',
+  title: 'Welcome',
   // fields
   isLogin: true,
   isRecoveringPassword: false,

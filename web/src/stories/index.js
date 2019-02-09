@@ -5,29 +5,20 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import Authentication from '../components/Authentication';
+import Logout from '../components/Logout';
 
 storiesOf('Authentication', module)
   .add('with default behaviour', () => (
     <Authentication
-      handleSignup={action('handleSignup')}
+      handleRegister={action('handleRegister')}
       handleLogin={action('handleLogin')}
-      handleRecoverPassword={action('handleRecoverPassword')}
+      handleRecover={action('handleRecover')}
       />
-  ))
-  .add('with Esperanto', () => (
-    <Authentication
-      title='Projekto Erasmus + DESQOL'
-      usernameCustomLabel='Uzulnomo'
-      passwordCustomLabel='Pasvorto'
-      passwordConfirmationCustomLabel='Konfirmu pasvorton'
-      recoverPasswordCustomLabel='Retrovu Pasvorton'
-      goToSignupCustomLabel='Iru al Subskriba Instead'
-      submitLoginCustomLabel='Ensaluti'
-      goToLoginCustomLabel='Iru al Salutnomo Anstataŭe'
-      submitSignupCustomLabel='Subskriba'
-      submitRecoverPasswordCustomLabel='Retrovu Pasvorton'
-      handleSignup={action('handleSignup')}
-      handleLogin={action('handleLogin')}
-      handleRecoverPassword={action('handleRecoverPassword')}
+  ));
+
+storiesOf('Logout', module)
+  .add('with default behaviour', () => (
+    <Logout
+      handleLogout={action('handleLogout')}
       />
   ));

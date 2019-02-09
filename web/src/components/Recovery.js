@@ -19,7 +19,7 @@ const Recovery = ({
   username,
   // handlers
   handleChange,
-  handleRecoverPassword,
+  handleRecover,
   handleShowLogin,
   // styles
   styles
@@ -55,7 +55,7 @@ const Recovery = ({
         type="submit"
         value="Recover Password"
         style={Object.assign({}, localStyles.button, styles.button)}
-        onClick={handleRecoverPassword}
+        onClick={handleRecover}
         />
     </div>
   </section>
@@ -66,7 +66,7 @@ Recovery.propTypes = {
   username: PropTypes.string,
   // handlers
   handleChange: PropTypes.func.isRequired,
-  handleRecoverPassword: PropTypes.func.isRequired,
+  handleRecover: PropTypes.func.isRequired,
   handleShowLogin: PropTypes.func.isRequired,
   // styles
   styles: PropTypes.shape({
@@ -83,7 +83,7 @@ Recovery.defaultProps = {
   handleChange: (e) => {
     console.log('Handle change...');
   },
-  handleRecoverPassword: (e) => {
+  handleRecover: (e) => {
     console.log('Handle recover password...');
   },
   handleShowLogin: (e) => {
