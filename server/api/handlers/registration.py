@@ -9,12 +9,16 @@ class RegistrationHandler(BaseHandler):
 
     @tornado.gen.coroutine
     def post(self):
-        if self.request.body:
-            body = tornado.escape.json_decode(self.request.body)
-            username = body['username']
-            password = body['password']
-        else:
-            self.send_error(400, message='You must provide a username and password!')
+        try:
+          if self.request.body:
+              body = tornado.escape.json_decode(self.request.body)
+              username = body['username']
+              password = body['password']
+              display_name = body['displayName']
+          else:
+            raise Exception()
+        except Exception:
+            self.send_error(400, message='You must provide a username, password and displayName!')
             return
 
         user = yield self.db.users.find_one({'username': username})
@@ -30,9 +34,11 @@ class RegistrationHandler(BaseHandler):
 
         yield self.db.users.insert_one({
             'username': username,
-            'password_hash': password_hash
+            'passwordHash': password_hash,
+            'displayName': display_name
         })
 
         self.set_status(200)
         self.response['username'] = username
+        self.response['displayName'] = display_name
         self.write_json()

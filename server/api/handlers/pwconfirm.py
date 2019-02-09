@@ -15,10 +15,10 @@ class PasswordResetConfirmHandler(BaseHandler):
             self.send_error(400, message='You must provide a token and password!')
             return
 
-        user = yield self.db.users.find_one({'recovery_token': token})
+        user = yield self.db.users.find_one({'recoveryToken': token})
 
         if user is None:
-            self.send_error(403, message='The token is incorrect!')
+            self.send_error(403, message='The token is invalid!')
             return
 
         password_hash = yield self.executor.submit(
@@ -27,12 +27,12 @@ class PasswordResetConfirmHandler(BaseHandler):
         )
 
         yield self.db.users.update_one({
-            'recovery_token': token
+            'recoveryToken': token
         }, {
             '$set': {
                 'token': None,
-                'recovery_token': None,
-                'password_hash': password_hash
+                'recoveryToken': None,
+                'passwordHash': password_hash
             }
         })
 
