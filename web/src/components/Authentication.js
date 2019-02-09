@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Registration from './Registration';
 import Login from './Login';
-import Signup from './Signup';
-import RecoverPassword from './RecoverPassword';
+import Recovery from './Recovery';
 
 class Authentication extends React.Component {
   constructor(props) {
     super(props);
 
     this.updateState = this.updateState.bind(this);
+    this.bubbleUpRegister = this.bubbleUpRegister.bind(this);
     this.bubbleUpLogin = this.bubbleUpLogin.bind(this);
-    this.bubbleUpSignup = this.bubbleUpSignup.bind(this);
-    this.bubbleUpRecoverPassword = this.bubbleUpRecoverPassword.bind(this);
+    this.bubbleUpRecover = this.bubbleUpRecover.bind(this);
 
     this.state = {
       isLogin: this.props.isLogin,
@@ -26,6 +26,14 @@ class Authentication extends React.Component {
   updateState(key, value) {
     this.setState({ [key]: value });
   }
+  
+  bubbleUpRegister() {
+    this.props.handleRegister({
+      username: this.state.username,
+      password: this.state.password,
+      passwordConfirmation: this.state.passwordConfirmation
+    });
+  }
 
   bubbleUpLogin() {
     this.props.handleLogin({
@@ -34,16 +42,8 @@ class Authentication extends React.Component {
     });
   }
 
-  bubbleUpSignup() {
-    this.props.handleSignup({
-      username: this.state.username,
-      password: this.state.password,
-      passwordConfirmation: this.state.passwordConfirmation
-    });
-  }
-
-  bubbleUpRecoverPassword() {
-    this.props.handleRecoverPassword({
+  bubbleUpRecover() {
+    this.props.handleRecover({
       username: this.state.username
     });
   }
@@ -61,48 +61,35 @@ class Authentication extends React.Component {
       if (this.state.isLogin && !this.state.isRecoveringPassword) {
         return (
           <Login
-            usernameCustomLabel={this.props.usernameCustomLabel}
-            passwordCustomLabel={this.props.passwordCustomLabel}
-            recoverPasswordCustomLabel={this.props.recoverPasswordCustomLabel}
-            goToSignupCustomLabel={this.props.goToSignupCustomLabel}
-            submitLoginCustomLabel={this.props.submitLoginCustomLabel}
             username={this.state.username}
             password={this.state.password}
-            handleShowSignup={this.updateState}
-            handleShowRecover={this.updateState}
-            handleLogin={this.bubbleUpLogin}
             handleChange={this.updateState}
+            handleLogin={this.bubbleUpLogin}
+            handleShowRecovery={this.updateState}
+            handleShowRegistration={this.updateState}
             styles={this.props.styles.login}
             />
         );
       } else if (!this.state.isLogin && !this.state.isRecoveringPassword) {
         return (
-          <Signup
-            usernameCustomLabel={this.props.usernameCustomLabel}
-            passwordCustomLabel={this.props.passwordCustomLabel}
-            passwordConfirmationCustomLabel={this.props.passwordConfirmationCustomLabel}
-            goToLoginCustomLabel={this.props.goToLoginCustomLabel}
-            submitSignupCustomLabel={this.props.submitSignupCustomLabel}
+          <Registration
             username={this.state.username}
             password={this.state.password}
             passwordConfirmation={this.state.passwordConfirmation}
-            handleShowLogin={this.updateState}
-            handleSignup={this.bubbleUpSignup}
             handleChange={this.updateState}
-            styles={this.props.styles.signup}
+            handleRegister={this.bubbleUpRegister}
+            handleShowLogin={this.updateState}
+            styles={this.props.styles.register}
             />
         );
       }
       return (
-        <RecoverPassword
-          usernameCustomLabel={this.props.usernameCustomLabel}
-          goToLoginCustomLabel={this.props.goToLoginCustomLabel}
-          submitRecoverPasswordCustomLabel={this.props.submitRecoverPasswordCustomLabel}
+        <Recovery
           username={this.state.username}
-          handleShowLogin={this.updateState}
-          handleRecoverPassword={this.bubbleUpRecoverPassword}
           handleChange={this.updateState}
-          styles={this.props.styles.recoverPassword}
+          handleRecover={this.bubbleUpRecover}
+          handleShowLogin={this.updateState}
+          styles={this.props.styles.recovery}
           />
       );
     };
@@ -119,30 +106,19 @@ class Authentication extends React.Component {
 }
 
 Authentication.propTypes = {
-  // labels
-  title: PropTypes.string,
-  usernameCustomLabel: PropTypes.string,
-  passwordCustomLabel: PropTypes.string,
-  passwordConfirmationCustomLabel: PropTypes.string,
-  recoverPasswordCustomLabel: PropTypes.string,
-  goToSignupCustomLabel: PropTypes.string,
-  submitLoginCustomLabel: PropTypes.string,
-  goToLoginCustomLabel: PropTypes.string,
-  submitSignupCustomLabel: PropTypes.string,
-  submitRecoverPasswordCustomLabel: PropTypes.string,
   // fields
   isLogin: PropTypes.bool,
   isRecoveringPassword: PropTypes.bool,
   // handlers
-  handleSignup: PropTypes.func.isRequired,
+  handleRegister: PropTypes.func.isRequired,
   handleLogin: PropTypes.func.isRequired,
-  handleRecoverPassword: PropTypes.func.isRequired,
+  handleRecover: PropTypes.func.isRequired,
   // styles
   styles: PropTypes.shape({
     mainWrapper: PropTypes.object,
     mainTitle: PropTypes.object,
     flipper: PropTypes.object,
-    signup: PropTypes.shape({
+    register: PropTypes.shape({
       wrapper: PropTypes.object,
       inputWrapper: PropTypes.object,
       buttonsWrapper: PropTypes.object,
@@ -159,7 +135,7 @@ Authentication.propTypes = {
       recoverPasswordButton: PropTypes.object,
       button: PropTypes.object
     }),
-    recoverPassword: PropTypes.shape({
+    recovery: PropTypes.shape({
       wrapper: PropTypes.object,
       inputWrapper: PropTypes.object,
       buttonsWrapper: PropTypes.object,
@@ -176,14 +152,14 @@ Authentication.defaultProps = {
   isLogin: true,
   isRecoveringPassword: false,
   // handlers
-  handleSignup: (e) => {
-    console.log('Handle signup...');
-  },
   handleLogin: (e) => {
-    console.log('Handle login...');
+    console.log('Handle login at the authentication component level...');
   },
-  handleRecoverPassword: (e) => {
-    console.log('Handle recover password...');
+  handleRegister: (e) => {
+    console.log('Handle register at the authentication component level...');
+  },
+  handleRecover: (e) => {
+    console.log('Handle recovery at the authentication component level...');
   },
   // styles
   styles: {}

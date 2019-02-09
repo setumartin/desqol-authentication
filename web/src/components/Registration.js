@@ -16,21 +16,15 @@ const localStyles = {
   }
 };
 
-const Signup = ({
-  // labels, etc.
-  usernameCustomLabel,
-  passwordCustomLabel,
-  passwordConfirmationCustomLabel,
-  goToLoginCustomLabel,
-  submitSignupCustomLabel,
+const Registration = ({
   // fields
   username,
   password,
   passwordConfirmation,
   // handlers
-  handleShowLogin,
-  handleSignup,
   handleChange,
+  handleRegister,
+  handleShowLogin,
   // styles
   styles
 }) => (
@@ -41,7 +35,7 @@ const Signup = ({
         type="text"
         id="username"
         name="username"
-        placeholder={usernameCustomLabel}
+        placeholder="Username"
         onChange={e => handleChange(e.target.name, e.target.value)}
         value={username}
         />
@@ -50,7 +44,7 @@ const Signup = ({
           type="password"
           id="password"
           name="password"
-          placeholder={passwordCustomLabel}
+          placeholder="Password"
           onChange={e => handleChange(e.target.name, e.target.value)}
           value={password}
           />
@@ -59,7 +53,7 @@ const Signup = ({
             type="password"
             id="passwordConfirmation"
             name="passwordConfirmation"
-            placeholder={passwordConfirmationCustomLabel}
+            placeholder="Confirm Password"
             onChange={e => handleChange(e.target.name, e.target.value)}
             value={passwordConfirmation}
             />
@@ -73,34 +67,28 @@ const Signup = ({
           handleShowLogin('isLogin', true);
         }}
         >
-        {goToLoginCustomLabel}
+        Go to Login Instead
       </button>
       <input
-        id="submit-signup"
+        id="submit-registration"
         type="submit"
-        value={submitSignupCustomLabel}
+        value="Register"
         style={Object.assign({}, localStyles.button, styles.button)}
-        onClick={handleSignup}
+        onClick={handleRegister}
         />
     </div>
   </section>
 );
 
-Signup.propTypes = {
-  // labels
-  usernameCustomLabel: PropTypes.string.isRequired,
-  passwordCustomLabel: PropTypes.string.isRequired,
-  passwordConfirmationCustomLabel: PropTypes.string.isRequired,
-  goToLoginCustomLabel: PropTypes.string.isRequired,
-  submitSignupCustomLabel: PropTypes.string.isRequired,
+Registration.propTypes = {
   // fields
   username: PropTypes.string,
   password: PropTypes.string,
   passwordConfirmation: PropTypes.string,
   // handlers
-  handleShowLogin: PropTypes.func.isRequired,
-  handleSignup: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleRegister: PropTypes.func.isRequired,
+  handleShowLogin: PropTypes.func.isRequired,
   // styles
   styles: PropTypes.shape({
     wrapper: PropTypes.object,
@@ -112,25 +100,19 @@ Signup.propTypes = {
   })
 };
 
-Signup.defaultProps = {
-  // labels
-  usernameCustomLabel: 'Username',
-  passwordCustomLabel: 'Password',
-  passwordConfirmationCustomLabel: 'Confirm Password',
-  goToLoginCustomLabel: 'Go to Login Instead',
-  submitSignupCustomLabel: 'Signup',
+Registration.defaultProps = {
   // handlers
-  handleShowLogin: (e) => {
-    console.log('Handle show login...');
-  },
-  handleSignup: (e) => {
-    console.log('Handle signup...');
-  },
   handleChange: (e) => {
     console.log('Handle change...');
+  },
+  handleRegister: (e) => {
+    console.log('Handle register...');
+  },
+  handleShowLogin: (e) => {
+    console.log('Handle show login...');
   },
   // styles
   styles: {}
 };
 
-export default Signup;
+export default Registration;
