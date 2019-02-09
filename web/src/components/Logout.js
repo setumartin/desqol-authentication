@@ -4,6 +4,8 @@ import React from 'react';
 const localStyles = {
   wrapper: {
   },
+  buttonsWrapper: {
+  },
   button: {
   }
 };
@@ -17,18 +19,17 @@ const Logout = ({
   // styles
   styles
 }) => (
-<div style={Object.assign({}, localStyles.wrapper, styles.wrapper)}>
-  <button
-    id="logout-button"
-    type="button"
-    style={Object.assign({}, localStyles.button, styles.button)}
-    onClick={(e) => {
-      handleLogout(e);
-    }}
-    >
-    Logout
-  </button>
-</div>
+  <section style={Object.assign({}, localStyles.wrapper, styles.wrapper)}>
+    <div style={Object.assign({}, localStyles.buttonsWrapper, styles.buttonsWrapper)}>
+      <input
+        id="submit-logout"
+        type="submit"
+        value="Logout"
+        style={Object.assign({}, localStyles.button, styles.button)}
+        onClick={handleLogout}
+        />
+    </div>
+  </section>
 );
 
 Logout.propTypes = {
@@ -37,6 +38,7 @@ Logout.propTypes = {
   // styles
   styles: PropTypes.shape({
     wrapper: PropTypes.object,
+    buttonsWrapper: PropTypes.object,
     button: PropTypes.object
   })
 };

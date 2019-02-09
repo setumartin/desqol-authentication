@@ -18,6 +18,7 @@ class Authentication extends React.Component {
       isLogin: this.props.isLogin,
       isRecoveringPassword: this.props.isRecoveringPassword,
       username: '',
+      displayName: '',
       password: '',
       passwordConfirmation: ''
     };
@@ -30,6 +31,7 @@ class Authentication extends React.Component {
   bubbleUpRegister() {
     this.props.handleRegister({
       username: this.state.username,
+      displayName: this.state.displayName,
       password: this.state.password,
       passwordConfirmation: this.state.passwordConfirmation
     });
@@ -74,6 +76,7 @@ class Authentication extends React.Component {
         return (
           <Registration
             username={this.state.username}
+            displayName={this.state.displayName}
             password={this.state.password}
             passwordConfirmation={this.state.passwordConfirmation}
             handleChange={this.updateState}

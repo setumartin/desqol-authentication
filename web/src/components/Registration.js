@@ -19,6 +19,7 @@ const localStyles = {
 const Registration = ({
   // fields
   username,
+  displayName,
   password,
   passwordConfirmation,
   // handlers
@@ -39,24 +40,33 @@ const Registration = ({
         onChange={e => handleChange(e.target.name, e.target.value)}
         value={username}
         />
-        <input
-          style={Object.assign({}, localStyles.input, styles.input)}
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Password"
-          onChange={e => handleChange(e.target.name, e.target.value)}
-          value={password}
-          />
-          <input
-            style={Object.assign({}, localStyles.input, styles.input)}
-            type="password"
-            id="passwordConfirmation"
-            name="passwordConfirmation"
-            placeholder="Confirm Password"
-            onChange={e => handleChange(e.target.name, e.target.value)}
-            value={passwordConfirmation}
-            />
+      <input
+        style={Object.assign({}, localStyles.input, styles.input)}
+        type="text"
+        id="displayName"
+        name="displayName"
+        placeholder="Display Name"
+        onChange={e => handleChange(e.target.name, e.target.value)}
+        value={displayName}
+        />
+      <input
+        style={Object.assign({}, localStyles.input, styles.input)}
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Password"
+        onChange={e => handleChange(e.target.name, e.target.value)}
+        value={password}
+        />
+      <input
+        style={Object.assign({}, localStyles.input, styles.input)}
+        type="password"
+        id="passwordConfirmation"
+        name="passwordConfirmation"
+        placeholder="Confirm Password"
+        onChange={e => handleChange(e.target.name, e.target.value)}
+        value={passwordConfirmation}
+        />
     </div>
     <div style={Object.assign({}, localStyles.buttonsWrapper, styles.buttonsWrapper)}>
       <button
@@ -83,6 +93,7 @@ const Registration = ({
 Registration.propTypes = {
   // fields
   username: PropTypes.string,
+  displayName: PropTypes.string,
   password: PropTypes.string,
   passwordConfirmation: PropTypes.string,
   // handlers
