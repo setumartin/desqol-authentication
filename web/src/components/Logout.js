@@ -36,11 +36,7 @@ Logout.propTypes = {
   // handlers
   handleLogout: PropTypes.func.isRequired,
   // styles
-  styles: PropTypes.shape({
-    wrapper: PropTypes.object,
-    buttonsWrapper: PropTypes.object,
-    button: PropTypes.object
-  })
+  styles: PropTypes.object.isRequired
 };
 
 Logout.defaultProps = {

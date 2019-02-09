@@ -117,35 +117,7 @@ Authentication.propTypes = {
   handleLogin: PropTypes.func.isRequired,
   handleRecover: PropTypes.func.isRequired,
   // styles
-  styles: PropTypes.shape({
-    mainWrapper: PropTypes.object,
-    mainTitle: PropTypes.object,
-    flipper: PropTypes.object,
-    register: PropTypes.shape({
-      wrapper: PropTypes.object,
-      inputWrapper: PropTypes.object,
-      buttonsWrapper: PropTypes.object,
-      input: PropTypes.object,
-      recoverPassword: PropTypes.object,
-      button: PropTypes.object
-    }),
-    login: PropTypes.shape({
-      wrapper: PropTypes.object,
-      inputWrapper: PropTypes.object,
-      buttonsWrapper: PropTypes.object,
-      input: PropTypes.object,
-      recoverPasswordWrapper: PropTypes.object,
-      recoverPasswordButton: PropTypes.object,
-      button: PropTypes.object
-    }),
-    recovery: PropTypes.shape({
-      wrapper: PropTypes.object,
-      inputWrapper: PropTypes.object,
-      buttonsWrapper: PropTypes.object,
-      input: PropTypes.object,
-      button: PropTypes.object
-    }),
-  })
+  styles: PropTypes.object.isRequired
 };
 
 Authentication.defaultProps = {
@@ -155,14 +127,14 @@ Authentication.defaultProps = {
   isLogin: true,
   isRecoveringPassword: false,
   // handlers
-  handleLogin: (e) => {
-    console.log('Handle login at the authentication component level...');
-  },
   handleRegister: (e) => {
-    console.log('Handle register at the authentication component level...');
+    console.log('Handle register...');
+  },
+  handleLogin: (e) => {
+    console.log('Handle login...');
   },
   handleRecover: (e) => {
-    console.log('Handle recovery at the authentication component level...');
+    console.log('Handle recovery...');
   },
   // styles
   styles: {}

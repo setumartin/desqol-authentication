@@ -69,13 +69,7 @@ Recovery.propTypes = {
   handleRecover: PropTypes.func.isRequired,
   handleShowLogin: PropTypes.func.isRequired,
   // styles
-  styles: PropTypes.shape({
-    wrapper: PropTypes.object,
-    inputWrapper: PropTypes.object,
-    buttonsWrapper: PropTypes.object,
-    input: PropTypes.object,
-    button: PropTypes.object
-  })
+  styles: PropTypes.object.isRequired
 };
 
 Recovery.defaultProps = {

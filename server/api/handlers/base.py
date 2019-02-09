@@ -26,6 +26,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def set_default_headers(self):
         self.set_header('Content-Type', 'application/json')
+        self.set_header('Access-Control-Allow-Origin', '*')
 
     def write_error(self, status_code, **kwargs):
         if 'message' not in kwargs:
@@ -39,3 +40,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def write_json(self):
         output = json.dumps(self.response)
         self.write(output)
+
+    def options(self):
+        self.set_header('Access-Control-Allow-Headers', '*')
+        self.set_status(200)
+        self.write_json()
+

@@ -96,15 +96,7 @@ Login.propTypes = {
   handleShowRecovery: PropTypes.func.isRequired,
   handleShowRegistration: PropTypes.func.isRequired,
   // styles
-  styles: PropTypes.shape({
-    wrapper: PropTypes.object,
-    inputWrapper: PropTypes.object,
-    buttonsWrapper: PropTypes.object,
-    input: PropTypes.object,
-    recoverPasswordWrapper: PropTypes.object,
-    recoverPasswordButton: PropTypes.object,
-    button: PropTypes.object
-  })
+  styles: PropTypes.object.isRequired
 };
 
 Login.defaultProps = {

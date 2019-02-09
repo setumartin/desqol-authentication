@@ -60,14 +60,7 @@ Profile.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired,
   // styles
-  styles: PropTypes.shape({
-    wrapper: PropTypes.object,
-    title: PropTypes.object,
-    paragraphWrapper: PropTypes.object,
-    p: PropTypes.object,
-    buttonsWrapper: PropTypes.object,
-    button: PropTypes.object,
-  })
+  styles: PropTypes.object.isRequired
 };
 
 Profile.defaultProps = {
