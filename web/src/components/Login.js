@@ -17,20 +17,14 @@ const localStyles = {
 };
 
 const Login = ({
-  // labels
-  usernameCustomLabel,
-  passwordCustomLabel,
-  recoverPasswordCustomLabel,
-  goToSignupCustomLabel,
-  submitLoginCustomLabel,
   // fields
   username,
   password,
   // handlers
-  handleShowSignup,
-  handleShowRecover,
-  handleLogin,
   handleChange,
+  handleLogin,
+  handleShowRecovery,
+  handleShowRegistration,
   // styles
   styles
 }) => (
@@ -41,7 +35,7 @@ const Login = ({
         type="text"
         id="username"
         name="username"
-        placeholder={usernameCustomLabel}
+        placeholder="Username"
         onChange={e => handleChange(e.target.name, e.target.value)}
         value={username}
         />
@@ -50,7 +44,7 @@ const Login = ({
           type="password"
           id="password"
           name="password"
-          placeholder={passwordCustomLabel}
+          placeholder="Password"
           onChange={e => handleChange(e.target.name, e.target.value)}
           value={password}
           />
@@ -64,10 +58,10 @@ const Login = ({
           type="button"
           style={Object.assign({}, localStyles.recoverPassword, styles.recoverPasswordButton)}
           onClick={() => {
-            handleShowRecover('isRecoveringPassword', true);
+            handleShowRecovery('isRecoveringPassword', true);
           }}
           >
-          {recoverPasswordCustomLabel}
+          Recover Lost Password
         </button>
       </div>
       <button
@@ -75,15 +69,15 @@ const Login = ({
         type="button"
         style={Object.assign({}, localStyles.button, styles.button)}
         onClick={() => {
-          handleShowSignup('isLogin', false);
+          handleShowRegistration('isLogin', false);
         }}
         >
-        {goToSignupCustomLabel}
+        Go to Registration Instead
       </button>
       <input
         id="submit-login"
         name="submit-login"
-        value={submitLoginCustomLabel}
+        value="Login"
         type="submit"
         style={Object.assign({}, localStyles.button, styles.button)}
         onClick={handleLogin}
@@ -93,51 +87,31 @@ const Login = ({
 );
 
 Login.propTypes = {
-  // labels
-  usernameCustomLabel: PropTypes.string.isRequired,
-  passwordCustomLabel: PropTypes.string.isRequired,
-  recoverPasswordCustomLabel: PropTypes.string.isRequired,
-  goToSignupCustomLabel: PropTypes.string.isRequired,
-  submitLoginCustomLabel: PropTypes.string.isRequired,
   // fields
   username: PropTypes.string,
   password: PropTypes.string,
   // handlers
-  handleShowSignup: PropTypes.func.isRequired,
-  handleShowRecover: PropTypes.func.isRequired,
-  handleLogin: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleLogin: PropTypes.func.isRequired,
+  handleShowRecovery: PropTypes.func.isRequired,
+  handleShowRegistration: PropTypes.func.isRequired,
   // styles
-  styles: PropTypes.shape({
-    wrapper: PropTypes.object,
-    inputWrapper: PropTypes.object,
-    buttonsWrapper: PropTypes.object,
-    input: PropTypes.object,
-    recoverPasswordWrapper: PropTypes.object,
-    recoverPasswordButton: PropTypes.object,
-    button: PropTypes.object
-  })
+  styles: PropTypes.object.isRequired
 };
 
 Login.defaultProps = {
-  // labels
-  usernameCustomLabel: 'Username',
-  passwordCustomLabel: 'Password',
-  recoverPasswordCustomLabel: 'Recover Password',
-  goToSignupCustomLabel: 'Go to Signup Instead',
-  submitLoginCustomLabel: 'Login',
   // handlers
-  handleShowSignup: (e) => {
-    console.log('Handle show signup...');
-  },
-  handleShowRecover: (e) => {
-    console.log('Handle show recover...');
+  handleChange: (e) => {
+    console.log('Handle change...');
   },
   handleLogin: (e) => {
     console.log('Handle login...');
   },
-  handleChange: (e) => {
-    console.log('Handle change...');
+  handleShowRecovery: (e) => {
+    console.log('Handle show recovery...');
+  },
+  handleShowRegistration: (e) => {
+    console.log('Handle show registration...');
   },
   // styles
   styles: {}

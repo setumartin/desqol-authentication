@@ -14,17 +14,13 @@ const localStyles = {
   }
 };
 
-const RecoverPassword = ({
-  // labels
-  usernameCustomLabel,
-  goToLoginCustomLabel,
-  submitRecoverPasswordCustomLabel,
+const Recovery = ({
   // fields
   username,
   // handlers
-  handleShowLogin,
   handleChange,
-  handleRecoverPassword,
+  handleRecover,
+  handleShowLogin,
   // styles
   styles
 }) => (
@@ -37,7 +33,7 @@ const RecoverPassword = ({
         type="text"
         id="username"
         name="username"
-        placeholder={usernameCustomLabel}
+        placeholder="Username"
         onChange={e => handleChange(e.target.name, e.target.value)}
         value={username}
         />
@@ -51,58 +47,44 @@ const RecoverPassword = ({
           handleShowLogin('isRecoveringPassword', false);
         }}
         >
-        {goToLoginCustomLabel}
+        Go to Login Instead
       </button>
       <input
         id="submit-recover-password"
         name="submit-recover-password"
         type="submit"
-        value={submitRecoverPasswordCustomLabel}
+        value="Recover Password"
         style={Object.assign({}, localStyles.button, styles.button)}
-        onClick={handleRecoverPassword}
+        onClick={handleRecover}
         />
     </div>
   </section>
 );
 
-RecoverPassword.propTypes = {
-  // labels
-  usernameCustomLabel: PropTypes.string.isRequired,
-  goToLoginCustomLabel: PropTypes.string.isRequired,
-  submitRecoverPasswordCustomLabel: PropTypes.string.isRequired,
+Recovery.propTypes = {
   // fields
   username: PropTypes.string,
   // handlers
-  handleShowLogin: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleRecoverPassword: PropTypes.func.isRequired,
+  handleRecover: PropTypes.func.isRequired,
+  handleShowLogin: PropTypes.func.isRequired,
   // styles
-  styles: PropTypes.shape({
-    wrapper: PropTypes.object,
-    inputWrapper: PropTypes.object,
-    buttonsWrapper: PropTypes.object,
-    input: PropTypes.object,
-    button: PropTypes.object
-  })
+  styles: PropTypes.object.isRequired
 };
 
-RecoverPassword.defaultProps = {
-  // labels
-  usernameCustomLabel: 'Username',
-  goToLoginCustomLabel: 'Go to Login Instead',
-  submitRecoverPasswordCustomLabel: 'Recover Password',
+Recovery.defaultProps = {
   // handlers
-  handleShowLogin: (e) => {
-    console.log('Handle show login...');
-  },
   handleChange: (e) => {
     console.log('Handle change...');
   },
-  handleRecoverPassword: (e) => {
+  handleRecover: (e) => {
     console.log('Handle recover password...');
+  },
+  handleShowLogin: (e) => {
+    console.log('Handle show login...');
   },
   // styles
   styles: {}
 };
 
-export default RecoverPassword;
+export default Recovery;

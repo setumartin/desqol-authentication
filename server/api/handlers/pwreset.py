@@ -18,7 +18,7 @@ class PasswordResetHandler(BaseHandler):
             'username': username
         }, {
             '$set': {
-                'recovery_token': recovery_token
+                'recoveryToken': recovery_token
             }
         })
 
@@ -26,10 +26,13 @@ class PasswordResetHandler(BaseHandler):
 
     @coroutine
     def post(self):
-        if self.request.body:
-            body = json_decode(self.request.body)
-            username = body['username']
-        else:
+        try:
+            if self.request.body:
+                body = tornado.escape.json_decode(self.request.body)
+                username = body['username']
+            else:
+                raise Exception()
+        except:
             self.send_error(400, message='You must provide a username!')
             return
 
@@ -37,7 +40,7 @@ class PasswordResetHandler(BaseHandler):
 
         if user is None:
             self.set_status(200)
-            self.response['_url'] = nil
+            self.response['_url'] = None
             self.write_json()
             return
 

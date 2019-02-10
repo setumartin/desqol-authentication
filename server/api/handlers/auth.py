@@ -20,20 +20,22 @@ class AuthHandler(BaseHandler):
             'token': token
         }, {
             'username': 1,
-            'expires_in': 1
+            'displayName': 1,
+            'expiresIn': 1
         })
 
         if user is None:
             self.current_user = None
-            self.send_error(403, message='Invalid token!')
+            self.send_error(403, message='Your token is invalid!')
             return
 
         current_time = mktime(datetime.now().utctimetuple())
-        if current_time > user['expires_in']:
+        if current_time > user['expiresIn']:
             self.current_user = None
-            self.send_error(403, message='Expired token!')
+            self.send_error(403, message='Your token has expired!')
             return
 
         self.current_user = {
-            'username': user['username']
+            'username': user['username'],
+            'display_name': user['displayName']
         }

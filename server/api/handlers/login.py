@@ -19,7 +19,7 @@ class LoginHandler(BaseHandler):
 
         token = {
             'token': token_hash.decode('utf-8'),
-            'expires_in': expires_in,
+            'expiresIn': expires_in,
         }
 
         yield self.db.users.update_one({
@@ -32,33 +32,36 @@ class LoginHandler(BaseHandler):
 
     @coroutine
     def post(self):
-        if self.request.body:
-            body = json_decode(self.request.body)
-            username = body['username']
-            password = body['password']
-        else:
+        try:
+            if self.request.body:
+                body = tornado.escape.json_decode(self.request.body)
+                username = body['username']
+                password = body['password']
+            else:
+                raise Exception()
+        except:
             self.send_error(400, message='You must provide a username and password!')
             return
 
         user = yield self.db.users.find_one({'username': username})
 
         if user is None:
-            self.send_error(403, message='The username and/or password is incorrect!')
+            self.send_error(403, message='The username and password are invalid!')
             return
 
         try:
             yield self.executor.submit(
                 verify,
-                user['password_hash'],
+                user['passwordHash'],
                 utf8(password)
             )
         except nacl.exceptions.InvalidkeyError:
-            self.send_error(403, message='The username and/or password is incorrect!')
+            self.send_error(403, message='The username and password are invalid!')
             return
 
         token = yield self.generate_token(username)
 
         self.set_status(200)
         self.response['token'] = token['token']
-        self.response['expiresIn'] = token['expires_in']
+        self.response['expiresIn'] = token['expiresIn']
         self.write_json()
