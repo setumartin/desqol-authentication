@@ -1,13 +1,12 @@
-import tornado.escape
-import tornado.gen
-import tornado.web
+from tornado.gen import coroutine
+from tornado.web import authenticated
 
 from .auth import AuthHandler
 
 class LogoutHandler(AuthHandler):
 
-    @tornado.gen.coroutine
-    @tornado.web.authenticated
+    @coroutine
+    @authenticated
     def post(self):
         yield self.db.users.update_one({
             'username': self.current_user['username'],

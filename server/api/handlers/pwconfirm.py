@@ -1,14 +1,15 @@
-import nacl.pwhash
-import tornado.gen
+from nacl.pwhash import str
+from tornado.escape import json_decode, utf8
+from tornado.gen import coroutine
 
 from .base import BaseHandler
 
 class PasswordResetConfirmHandler(BaseHandler):
 
-    @tornado.gen.coroutine
+    @coroutine
     def post(self):
         if self.request.body:
-            body = tornado.escape.json_decode(self.request.body)
+            body = json_decode(self.request.body)
             token = body['token']
             password = body['password']
         else:
@@ -21,10 +22,7 @@ class PasswordResetConfirmHandler(BaseHandler):
             self.send_error(403, message='The token is incorrect!')
             return
 
-        password_hash = yield self.executor.submit(
-            nacl.pwhash.str,
-            tornado.escape.utf8(password)
-        )
+        password_hash = yield self.executor.submit(str, utf8(password))
 
         yield self.db.users.update_one({
             'recovery_token': token

@@ -1,7 +1,7 @@
-import json
-import tornado.web
+from json import dumps, loads
+from tornado.web import RequestHandler
 
-class BaseHandler(tornado.web.RequestHandler):
+class BaseHandler(RequestHandler):
 
     @property
     def db(self):
@@ -18,7 +18,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
         if self.request.body:
             try:
-                json_data = json.loads(self.request.body)
+                json_data = loads(self.request.body)
                 self.request.arguments.update(json_data)
             except ValueError:
                 self.send_error(400, message='Unable to parse JSON.')
@@ -37,5 +37,5 @@ class BaseHandler(tornado.web.RequestHandler):
         self.write_json()
 
     def write_json(self):
-        output = json.dumps(self.response)
+        output = dumps(self.response)
         self.write(output)

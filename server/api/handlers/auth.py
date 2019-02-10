@@ -1,13 +1,12 @@
-import datetime
-import nacl.pwhash
-import time
-import tornado.gen
+from datetime import datetime
+from time import mktime
+from tornado.gen import coroutine
 
 from .base import BaseHandler
 
 class AuthHandler(BaseHandler):
 
-    @tornado.gen.coroutine
+    @coroutine
     def prepare(self):
         super(AuthHandler, self).prepare()
 
@@ -29,8 +28,8 @@ class AuthHandler(BaseHandler):
             self.send_error(403, message='Invalid token!')
             return
 
-        now = time.mktime(datetime.datetime.now().utctimetuple())
-        if now > user['expires_in']:
+        current_time = mktime(datetime.now().utctimetuple())
+        if current_time > user['expires_in']:
             self.current_user = None
             self.send_error(403, message='Expired token!')
             return

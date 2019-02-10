@@ -1,17 +1,18 @@
-import logging
-import tornado.httpserver
-import tornado.ioloop
-import api.conf
-import api.app
+from logging import basicConfig, INFO, info
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
+
+from api.conf import HOST, PORT
+from api.app import Application
 
 def main():
-    logging.basicConfig(level=logging.INFO)
+    basicConfig(level=INFO)
 
-    http_server = tornado.httpserver.HTTPServer(api.app.Application())
-    http_server.listen(api.conf.PORT, api.conf.HOST)
+    http_server = HTTPServer(Application())
+    http_server.listen(PORT, HOST)
 
-    logging.info('Starting server...')
-    tornado.ioloop.IOLoop.current().start()
+    info('Starting server...')
+    IOLoop.current().start()
 
 if __name__ == '__main__':
     main()

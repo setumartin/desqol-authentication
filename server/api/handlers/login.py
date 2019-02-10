@@ -1,20 +1,21 @@
-import datetime
-import nacl.hash
-import nacl.pwhash
-import time
-import tornado.gen
-import uuid
+from datetime import datetime
+from nacl.hash import blake2b
+from nacl.pwhash import verify
+from time import mktime
+from tornado.escape import json_decode, utf8
+from tornado.gen import coroutine
+from uuid import uuid4
 
 from .base import BaseHandler
 
 class LoginHandler(BaseHandler):
 
-    @tornado.gen.coroutine
+    @coroutine
     def generate_token(self, username):
-        token_uuid = uuid.uuid4().hex
-        token_hash = nacl.hash.blake2b(token_uuid.encode(), key=self.hmac_key)
-        expires_in = datetime.datetime.now() + datetime.timedelta(hours=2)
-        expires_in = time.mktime(expires_in.utctimetuple())
+        token_uuid = uuid4().hex()
+        token_hash = blake2b(token_uuid.encode(), key=self.hmac_key)
+        expires_in = datetime.now() + datetime.timedelta(hours=2)
+        expires_in = mktime(expires_in.utctimetuple())
 
         token = {
             'token': token_hash.decode('utf-8'),
@@ -29,10 +30,10 @@ class LoginHandler(BaseHandler):
 
         return token
 
-    @tornado.gen.coroutine
+    @coroutine
     def post(self):
         if self.request.body:
-            body = tornado.escape.json_decode(self.request.body)
+            body = json_decode(self.request.body)
             username = body['username']
             password = body['password']
         else:
@@ -47,9 +48,9 @@ class LoginHandler(BaseHandler):
 
         try:
             yield self.executor.submit(
-                nacl.pwhash.verify,
+                verify,
                 user['password_hash'],
-                tornado.escape.utf8(password)
+                utf8(password)
             )
         except nacl.exceptions.InvalidkeyError:
             self.send_error(403, message='The username and/or password is incorrect!')
