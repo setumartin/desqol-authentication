@@ -19,7 +19,7 @@ class AuthHandler(BaseHandler):
         user = yield self.db.users.find_one({
             'token': token
         }, {
-            'username': 1,
+            'email': 1,
             'displayName': 1,
             'expiresIn': 1
         })
@@ -36,6 +36,6 @@ class AuthHandler(BaseHandler):
             return
 
         self.current_user = {
-            'username': user['username'],
+            'email': user['email'],
             'display_name': user['displayName']
         }

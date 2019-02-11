@@ -22,6 +22,10 @@ class PasswordResetConfirmHandler(BaseHandler):
             self.send_error(403, message='The token is invalid!')
             return
 
+        if not password:
+            self.send_error(400, message='The password is invalid!')
+            return
+
         password_hash = yield self.executor.submit(str, utf8(password))
 
         yield self.db.users.update_one({

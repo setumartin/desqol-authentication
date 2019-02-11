@@ -12,18 +12,18 @@ class PasswordChangeHandler(BaseHandler):
         try:
             if self.request.body:
                 body = tornado.escape.json_decode(self.request.body)
-                username = body['username']
+                email = body['email']
                 password = body['password']
             else:
               raise Exception()
         except:
-            self.send_error(400, message='You must provide a username and password!')
+            self.send_error(400, message='You must provide an email address and password!')
             return
 
-        user = yield self.db.users.find_one({'username': username})
+        user = yield self.db.users.find_one({'email': email})
 
         if user is None:
-            self.send_error(403, message='The username and password are invalid!')
+            self.send_error(403, message='The email address and password are invalid!')
             return
 
         try:
@@ -33,13 +33,13 @@ class PasswordChangeHandler(BaseHandler):
                 utf8(password)
             )
         except InvalidkeyError:
-            self.send_error(403, message='The username and password are invalid!')
+            self.send_error(403, message='The email address and password are invalid!')
             return
 
         password_hash = yield self.executor.submit(str, utf8(password))
 
         yield self.db.users.update_one({
-            'username': username,
+            'email': email,
         }, {
             '$set': {
                 'passwordHash': password_hash

@@ -10,7 +10,7 @@ class UserHandler(AuthHandler):
     @authenticated
     def get(self):
         self.set_status(200)
-        self.response['username'] = self.current_user['username']
+        self.response['email'] = self.current_user['email']
         self.response['displayName'] = self.current_user['display_name']
         self.write_json()
 
@@ -32,7 +32,7 @@ class UserHandler(AuthHandler):
             return
 
         yield self.db.users.update_one({
-            'username': self.current_user['username'],
+            'email': self.current_user['email'],
         }, {
             '$set': {
                 'displayName': display_name
@@ -42,6 +42,6 @@ class UserHandler(AuthHandler):
         self.current_user['display_name'] = display_name
 
         self.set_status(200)
-        self.response['username'] = self.current_user['username']
+        self.response['email'] = self.current_user['email']
         self.response['displayName'] = self.current_user['display_name']
         self.write_json()

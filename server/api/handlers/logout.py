@@ -9,7 +9,7 @@ class LogoutHandler(AuthHandler):
     @authenticated
     def post(self):
         yield self.db.users.update_one({
-            'username': self.current_user['username'],
+            'email': self.current_user['email'],
         }, {
             '$set': {
                 'token': None

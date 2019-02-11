@@ -11,7 +11,7 @@ from .base import BaseHandler
 class LoginHandler(BaseHandler):
 
     @coroutine
-    def generate_token(self, username):
+    def generate_token(self, email):
         token_uuid = uuid4().hex
         token_hash = blake2b(token_uuid.encode(), key=self.hmac_key)
         expires_in = datetime.now() + timedelta(hours=2)
@@ -23,7 +23,7 @@ class LoginHandler(BaseHandler):
         }
 
         yield self.db.users.update_one({
-          'username': username
+          'email': email
         }, {
           '$set': token
         })
@@ -35,26 +35,26 @@ class LoginHandler(BaseHandler):
         try:
             if self.request.body:
                 body = json_decode(self.request.body)
-                username = body['username']
+                email = body['email']
                 password = body['password']
             else:
                 raise Exception()
         except:
-            self.send_error(400, message='You must provide a username and password!')
+            self.send_error(400, message='You must provide an email address and password!')
             return
 
-        if not username:
-            self.send_error(400, message='The username is invalid!')
+        if not email:
+            self.send_error(400, message='The email address is invalid!')
             return
 
         if not password:
             self.send_error(400, message='The password is invalid!')
             return
 
-        user = yield self.db.users.find_one({'username': username})
+        user = yield self.db.users.find_one({'email': email})
 
         if user is None:
-            self.send_error(403, message='The username and password are invalid!')
+            self.send_error(403, message='The email address and password are invalid!')
             return
 
         try:
@@ -64,10 +64,10 @@ class LoginHandler(BaseHandler):
                 utf8(password)
             )
         except nacl.exceptions.InvalidkeyError:
-            self.send_error(403, message='The username and password are invalid!')
+            self.send_error(403, message='The email address and password are invalid!')
             return
 
-        token = yield self.generate_token(username)
+        token = yield self.generate_token(email)
 
         self.set_status(200)
         self.response['token'] = token['token']

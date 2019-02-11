@@ -11,17 +11,17 @@ class RegistrationHandler(BaseHandler):
         try:
           if self.request.body:
               body = json_decode(self.request.body)
-              username = body['username']
+              email = body['email']
               password = body['password']
               display_name = body['displayName']
           else:
             raise Exception()
         except Exception:
-            self.send_error(400, message='You must provide a username, password and displayName!')
+            self.send_error(400, message='You must provide an email address, password and displayName!')
             return
 
-        if not username:
-            self.send_error(400, message='The username is invalid!')
+        if not email:
+            self.send_error(400, message='The email address is invalid!')
             return
 
         if not password:
@@ -32,21 +32,21 @@ class RegistrationHandler(BaseHandler):
             self.send_error(400, message='The displayName is invalid!')
             return
 
-        user = yield self.db.users.find_one({'username': username})
+        user = yield self.db.users.find_one({'email': email})
 
         if user is not None:
-            self.send_error(409, message='User already exists!')
+            self.send_error(409, message='A user with the given email address already exists!')
             return
 
         password_hash = yield self.executor.submit(str, utf8(password))
 
         yield self.db.users.insert_one({
-            'username': username,
+            'email': email,
             'passwordHash': password_hash,
             'displayName': display_name
         })
 
         self.set_status(200)
-        self.response['username'] = username
+        self.response['email'] = email
         self.response['displayName'] = display_name
         self.write_json()
