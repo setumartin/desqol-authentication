@@ -19,12 +19,16 @@ class UserHandler(AuthHandler):
     def put(self):
         try:
             if self.request.body:
-                body = tornado.escape.json_decode(self.request.body)
+                body = json_decode(self.request.body)
                 display_name = body['displayName']
             else:
                 raise Exception()
         except:
             self.send_error(400, message='You must provide a displayName!')
+            return
+
+        if not display_name:
+            self.send_error(400, message='The displayName is invalid!')
             return
 
         yield self.db.users.update_one({

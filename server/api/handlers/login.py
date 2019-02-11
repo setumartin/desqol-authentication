@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from nacl.hash import blake2b
 from nacl.pwhash import verify
 from time import mktime
@@ -12,9 +12,9 @@ class LoginHandler(BaseHandler):
 
     @coroutine
     def generate_token(self, username):
-        token_uuid = uuid4().hex()
+        token_uuid = uuid4().hex
         token_hash = blake2b(token_uuid.encode(), key=self.hmac_key)
-        expires_in = datetime.now() + datetime.timedelta(hours=2)
+        expires_in = datetime.now() + timedelta(hours=2)
         expires_in = mktime(expires_in.utctimetuple())
 
         token = {
@@ -34,13 +34,21 @@ class LoginHandler(BaseHandler):
     def post(self):
         try:
             if self.request.body:
-                body = tornado.escape.json_decode(self.request.body)
+                body = json_decode(self.request.body)
                 username = body['username']
                 password = body['password']
             else:
                 raise Exception()
         except:
             self.send_error(400, message='You must provide a username and password!')
+            return
+
+        if not username:
+            self.send_error(400, message='The username is invalid!')
+            return
+
+        if not password:
+            self.send_error(400, message='The password is invalid!')
             return
 
         user = yield self.db.users.find_one({'username': username})

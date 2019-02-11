@@ -10,7 +10,7 @@ class RegistrationHandler(BaseHandler):
     def post(self):
         try:
           if self.request.body:
-              body = tornado.escape.json_decode(self.request.body)
+              body = json_decode(self.request.body)
               username = body['username']
               password = body['password']
               display_name = body['displayName']
@@ -20,10 +20,22 @@ class RegistrationHandler(BaseHandler):
             self.send_error(400, message='You must provide a username, password and displayName!')
             return
 
+        if not username:
+            self.send_error(400, message='The username is invalid!')
+            return
+
+        if not password:
+            self.send_error(400, message='The password is invalid!')
+            return
+
+        if not display_name:
+            self.send_error(400, message='The displayName is invalid!')
+            return
+
         user = yield self.db.users.find_one({'username': username})
 
         if user is not None:
-            self.send_error(400, message='User already exists!')
+            self.send_error(409, message='User already exists!')
             return
 
         password_hash = yield self.executor.submit(str, utf8(password))
