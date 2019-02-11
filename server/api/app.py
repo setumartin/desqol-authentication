@@ -3,6 +3,7 @@ from nacl.utils import random
 from tornado.web import Application
 from motor import MotorClient
 
+from .handlers.welcome import WelcomeHandler
 from .handlers.registration import RegistrationHandler
 from .handlers.login import LoginHandler
 from .handlers.logout import LogoutHandler
@@ -16,8 +17,8 @@ from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, APP_SECRETKEY_SIZE
 class Application(Application):
 
     def __init__(self):
-
         handlers = [
+            (r'/', WelcomeHandler),
             (r'/api/registration', RegistrationHandler),
             (r'/api/login', LoginHandler),
             (r'/api/logout', LogoutHandler),

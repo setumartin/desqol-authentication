@@ -1,4 +1,3 @@
-HOST = 'localhost'
 PORT = 4000
 
 MONGODB_HOST = {
