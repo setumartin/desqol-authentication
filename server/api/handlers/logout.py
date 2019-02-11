@@ -5,8 +5,8 @@ from .auth import AuthHandler
 
 class LogoutHandler(AuthHandler):
 
-    @coroutine
     @authenticated
+    @coroutine
     def post(self):
         yield self.db.users.update_one({
             'email': self.current_user['email'],

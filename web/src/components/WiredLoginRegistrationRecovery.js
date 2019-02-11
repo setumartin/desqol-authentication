@@ -14,6 +14,12 @@ const FETCH_CONFIG = {
 };
 
 const register = (e, success, failure) => {
+  if (e['password'] !== e['passwordConfirmation']) {
+    failure({
+      'message': 'The passwords do not match!'
+    });
+    return;
+  }
   const body = {
     email: e['email'],
     displayName: e['displayName'],
@@ -44,7 +50,10 @@ const login = (e, success, failure) => {
   }))
   .then(response => {
     if (response.status === 200) {
-      response.json().then(success);
+      response.json().then(parsedResponse => {
+        sessionStorage.setItem('token', parsedResponse['token']);
+        success(parsedResponse);
+      });
     } else {
       response.json().then(failure);
     }

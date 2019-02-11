@@ -27,6 +27,8 @@ class BaseHandler(RequestHandler):
     def set_default_headers(self):
         self.set_header('Content-Type', 'application/json')
         self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Access-Control-Allow-Methods', '*')
+        self.set_header('Access-Control-Allow-Headers', '*')
 
     def write_error(self, status_code, **kwargs):
         if 'message' not in kwargs:
@@ -42,7 +44,6 @@ class BaseHandler(RequestHandler):
         self.write(output)
 
     def options(self):
-        self.set_header('Access-Control-Allow-Headers', '*')
-        self.set_status(200)
-        self.write_json()
+        self.set_status(204)
+        self.finish()
 

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import './App.css';
 
 import WiredLoginRegistrationRecovery from './components/WiredLoginRegistrationRecovery';
+import WiredLogout from './components/WiredLogout';
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +16,8 @@ class App extends Component {
     this.handleLoginFailure = this.handleLoginFailure.bind(this);
     this.handleRecoverSuccess = this.handleRecoverSuccess.bind(this);
     this.handleRecoverFailure = this.handleRecoverFailure.bind(this);
+    this.handleLogoutSuccess = this.handleLogoutSuccess.bind(this);
+    this.handleLogoutFailure = this.handleLogoutFailure.bind(this);
   }
 
   handleRegisterSuccess(e) {
@@ -58,6 +61,20 @@ class App extends Component {
     });
     console.log(e);
   }
+  
+  handleLogoutSuccess(e) {
+    this.setState({
+      lastMessage: 'Logout was successful!'
+    });
+    console.log(e);
+  }
+
+  handleLogoutFailure(e) {
+    this.setState({
+      lastMessage: 'Logout failed: ' + e['message']
+    });
+    console.log(e);
+  }
 
   render() {
     return (
@@ -70,6 +87,11 @@ class App extends Component {
           handleLoginFailure={this.handleLoginFailure}
           handleRecoverSuccess={this.handleRecoverSuccess}
           handleRecoverFailure={this.handleRecoverFailure}
+        />
+        <hr />
+        <WiredLogout
+          handleLogoutSuccess={this.handleLogoutSuccess}
+          handleLogoutFailure={this.handleLogoutFailure}
         />
       </Fragment>
     );

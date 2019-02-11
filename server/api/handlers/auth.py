@@ -9,6 +9,9 @@ class AuthHandler(BaseHandler):
     @coroutine
     def prepare(self):
         super(AuthHandler, self).prepare()
+        
+        if self.request.method == 'OPTIONS':
+          return
 
         token = self.request.headers.get('X-Token')
         if not token:
