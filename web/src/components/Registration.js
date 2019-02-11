@@ -18,7 +18,7 @@ const localStyles = {
 
 const Registration = ({
   // fields
-  username,
+  email,
   displayName,
   password,
   passwordConfirmation,
@@ -34,11 +34,11 @@ const Registration = ({
       <input
         style={Object.assign({}, localStyles.input, styles.input)}
         type="text"
-        id="username"
-        name="username"
-        placeholder="Username"
+        id="email"
+        name="email"
+        placeholder="email"
         onChange={e => handleChange(e.target.name, e.target.value)}
-        value={username}
+        value={email}
         />
       <input
         style={Object.assign({}, localStyles.input, styles.input)}
@@ -92,7 +92,7 @@ const Registration = ({
 
 Registration.propTypes = {
   // fields
-  username: PropTypes.string,
+  email: PropTypes.string,
   displayName: PropTypes.string,
   password: PropTypes.string,
   passwordConfirmation: PropTypes.string,

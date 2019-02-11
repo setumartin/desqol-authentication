@@ -4,13 +4,13 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-import Authentication from '../components/Authentication';
+import LoginRegistrationRecovery from '../components/LoginRegistrationRecovery';
 import Logout from '../components/Logout';
 import Profile from '../components/Profile';
 
-storiesOf('Authentication', module)
+storiesOf('LoginRegistrationRecovery', module)
   .add('with default behaviour', () => (
-    <Authentication
+    <LoginRegistrationRecovery
       handleRegister={action('handleRegister')}
       handleLogin={action('handleLogin')}
       handleRecover={action('handleRecover')}

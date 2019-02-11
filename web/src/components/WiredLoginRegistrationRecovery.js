@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Authentication from './Authentication';
+import LoginRegistrationRecovery from './LoginRegistrationRecovery';
 
 const API = 'http://localhost:4000/api';
 
@@ -15,7 +15,7 @@ const FETCH_CONFIG = {
 
 const register = (e, success, failure) => {
   const body = {
-    username: e['username'],
+    email: e['email'],
     displayName: e['displayName'],
     password: e['password']
   };
@@ -35,7 +35,7 @@ const register = (e, success, failure) => {
 
 const login = (e, success, failure) => {
   const body = {
-    username: e['username'],
+    email: e['email'],
     password: e['password']
   };
   fetch(API + '/login', Object.assign(FETCH_CONFIG, {
@@ -54,7 +54,7 @@ const login = (e, success, failure) => {
 
 const recover = (e, success, failure) => {
   const body = {
-    username: e['username']
+    email: e['email']
   };
   fetch(API + '/password/reset', Object.assign(FETCH_CONFIG, {
     method: 'POST',
@@ -70,7 +70,7 @@ const recover = (e, success, failure) => {
   .catch(error => failure(error));
 };
 
-const WiredAuthentication = ({
+const WiredLoginRegistrationRecovery = ({
   // handlers
   handleRegisterSuccess,
   handleRegisterFailure,
@@ -81,14 +81,14 @@ const WiredAuthentication = ({
   // styles
   styles
 }) => (
-  <Authentication
+  <LoginRegistrationRecovery
     handleRegister={(e) => register(e, handleRegisterSuccess, handleRegisterFailure)}
     handleLogin={(e) => login(e, handleLoginSuccess, handleLoginFailure)}
     handleRecover={(e) => recover(e, handleRecoverSuccess, handleRecoverFailure)}
     />
 );
 
-WiredAuthentication.propTypes = {
+WiredLoginRegistrationRecovery.propTypes = {
   // handlers
   handleRegisterSuccess: PropTypes.func.isRequired,
   handleRegisterFailure: PropTypes.func.isRequired,
@@ -100,7 +100,7 @@ WiredAuthentication.propTypes = {
   styles: PropTypes.object
 };
 
-WiredAuthentication.defaultProps = {
+WiredLoginRegistrationRecovery.defaultProps = {
   // handlers
   handleRegisterSuccess: (e) => {
     console.log('Handle register success...');
@@ -130,4 +130,4 @@ WiredAuthentication.defaultProps = {
   styles: {}
 };
 
-export default WiredAuthentication;
+export default WiredLoginRegistrationRecovery;

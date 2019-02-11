@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import WiredAuthentication from './components/WiredAuthentication';
+import WiredLoginRegistrationRecovery from './components/WiredLoginRegistrationRecovery';
 
 class App extends Component {
   render() {
     return (
-      <WiredAuthentication />
+      <WiredLoginRegistrationRecovery />
     );
   }
 }

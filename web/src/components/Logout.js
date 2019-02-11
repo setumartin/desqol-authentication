@@ -12,7 +12,7 @@ const localStyles = {
 
 const Logout = ({
   // fields
-  username,
+  email,
   password,
   // handlers
   handleLogout,

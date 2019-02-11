@@ -16,7 +16,7 @@ const localStyles = {
 
 const Recovery = ({
   // fields
-  username,
+  email,
   // handlers
   handleChange,
   handleRecover,
@@ -31,11 +31,11 @@ const Recovery = ({
       <input
         style={Object.assign({}, localStyles.input, styles.input)}
         type="text"
-        id="username"
-        name="username"
-        placeholder="Username"
+        id="email"
+        name="email"
+        placeholder="email"
         onChange={e => handleChange(e.target.name, e.target.value)}
-        value={username}
+        value={email}
         />
     </div>
     <div style={Object.assign({}, localStyles.buttonsWrapper, styles.buttonsWrapper)}>
@@ -63,7 +63,7 @@ const Recovery = ({
 
 Recovery.propTypes = {
   // fields
-  username: PropTypes.string,
+  email: PropTypes.string,
   // handlers
   handleChange: PropTypes.func.isRequired,
   handleRecover: PropTypes.func.isRequired,

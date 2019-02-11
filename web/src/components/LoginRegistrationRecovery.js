@@ -5,7 +5,7 @@ import Registration from './Registration';
 import Login from './Login';
 import Recovery from './Recovery';
 
-class Authentication extends React.Component {
+class LoginRegistrationRecovery extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +17,7 @@ class Authentication extends React.Component {
     this.state = {
       isLogin: this.props.isLogin,
       isRecoveringPassword: this.props.isRecoveringPassword,
-      username: '',
+      email: '',
       displayName: '',
       password: '',
       passwordConfirmation: ''
@@ -30,7 +30,7 @@ class Authentication extends React.Component {
   
   bubbleUpRegister() {
     this.props.handleRegister({
-      username: this.state.username,
+      email: this.state.email,
       displayName: this.state.displayName,
       password: this.state.password,
       passwordConfirmation: this.state.passwordConfirmation
@@ -39,14 +39,14 @@ class Authentication extends React.Component {
 
   bubbleUpLogin() {
     this.props.handleLogin({
-      username: this.state.username,
+      email: this.state.email,
       password: this.state.password
     });
   }
 
   bubbleUpRecover() {
     this.props.handleRecover({
-      username: this.state.username
+      email: this.state.email
     });
   }
 
@@ -63,7 +63,7 @@ class Authentication extends React.Component {
       if (this.state.isLogin && !this.state.isRecoveringPassword) {
         return (
           <Login
-            username={this.state.username}
+            email={this.state.email}
             password={this.state.password}
             handleChange={this.updateState}
             handleLogin={this.bubbleUpLogin}
@@ -75,7 +75,7 @@ class Authentication extends React.Component {
       } else if (!this.state.isLogin && !this.state.isRecoveringPassword) {
         return (
           <Registration
-            username={this.state.username}
+            email={this.state.email}
             displayName={this.state.displayName}
             password={this.state.password}
             passwordConfirmation={this.state.passwordConfirmation}
@@ -88,7 +88,7 @@ class Authentication extends React.Component {
       }
       return (
         <Recovery
-          username={this.state.username}
+          email={this.state.email}
           handleChange={this.updateState}
           handleRecover={this.bubbleUpRecover}
           handleShowLogin={this.updateState}
@@ -108,7 +108,7 @@ class Authentication extends React.Component {
   }
 }
 
-Authentication.propTypes = {
+LoginRegistrationRecovery.propTypes = {
   // fields
   isLogin: PropTypes.bool,
   isRecoveringPassword: PropTypes.bool,
@@ -120,7 +120,7 @@ Authentication.propTypes = {
   styles: PropTypes.object.isRequired
 };
 
-Authentication.defaultProps = {
+LoginRegistrationRecovery.defaultProps = {
   // labels
   title: 'Welcome',
   // fields
@@ -140,4 +140,4 @@ Authentication.defaultProps = {
   styles: {}
 };
 
-export default Authentication;
+export default LoginRegistrationRecovery;

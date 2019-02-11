@@ -18,7 +18,7 @@ const localStyles = {
 
 const Login = ({
   // fields
-  username,
+  email,
   password,
   // handlers
   handleChange,
@@ -33,11 +33,11 @@ const Login = ({
       <input
         style={Object.assign({}, localStyles.input, styles.input)}
         type="text"
-        id="username"
-        name="username"
-        placeholder="Username"
+        id="email"
+        name="email"
+        placeholder="email"
         onChange={e => handleChange(e.target.name, e.target.value)}
-        value={username}
+        value={email}
         />
         <input
           style={Object.assign({}, localStyles.input, styles.input)}
@@ -88,7 +88,7 @@ const Login = ({
 
 Login.propTypes = {
   // fields
-  username: PropTypes.string,
+  email: PropTypes.string,
   password: PropTypes.string,
   // handlers
   handleChange: PropTypes.func.isRequired,
