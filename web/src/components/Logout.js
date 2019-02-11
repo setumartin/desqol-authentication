@@ -40,11 +40,6 @@ Logout.propTypes = {
 };
 
 Logout.defaultProps = {
-  // handlers
-  handleLogout: (e) => {
-    console.log('Handle logout...');
-  },
-  // styles
   styles: {}
 };
 

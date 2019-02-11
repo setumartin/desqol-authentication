@@ -101,32 +101,6 @@ WiredLoginRegistrationRecovery.propTypes = {
 };
 
 WiredLoginRegistrationRecovery.defaultProps = {
-  // handlers
-  handleRegisterSuccess: (e) => {
-    console.log('Handle register success...');
-    console.log(e);
-  },
-  handleRegisterFailure: (e) => {
-    console.error('Handle register failure...');
-    console.log(e);
-  },
-  handleLoginSuccess: (e) => {
-    console.log('Handle login success...');
-    console.log(e);
-  },
-  handleLoginFailure: (e) => {
-    console.error('Handle login failure...');
-    console.log(e);
-  },
-  handleRecoverSuccess: (e) => {
-    console.log('Handle recover success...');
-    console.log(e);
-  },
-  handleRecoverFailure: (e) => {
-    console.error('Handle recover failure...');
-    console.log(e);
-  },
-  // styles
   styles: {}
 };
 

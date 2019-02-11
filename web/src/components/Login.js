@@ -100,20 +100,6 @@ Login.propTypes = {
 };
 
 Login.defaultProps = {
-  // handlers
-  handleChange: (e) => {
-    console.log('Handle change...');
-  },
-  handleLogin: (e) => {
-    console.log('Handle login...');
-  },
-  handleShowRecovery: (e) => {
-    console.log('Handle show recovery...');
-  },
-  handleShowRegistration: (e) => {
-    console.log('Handle show registration...');
-  },
-  // styles
   styles: {}
 };
 

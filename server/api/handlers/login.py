@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from nacl.exceptions import InvalidkeyError
 from nacl.hash import blake2b
 from nacl.pwhash import verify
 from time import mktime
@@ -63,7 +64,7 @@ class LoginHandler(BaseHandler):
                 user['passwordHash'],
                 utf8(password)
             )
-        except nacl.exceptions.InvalidkeyError:
+        except InvalidkeyError:
             self.send_error(403, message='The email address and password are invalid!')
             return
 

@@ -65,14 +65,6 @@ Profile.propTypes = {
 
 Profile.defaultProps = {
   title: 'Profile',
-  // handlers
-  handleChange: (e) => {
-    console.log('Handle change...');
-  },
-  handleUpdate: (e) => {
-    console.log('Handle update...');
-  },
-  // styles
   styles: {}
 };
 

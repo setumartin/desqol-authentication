@@ -73,17 +73,6 @@ Recovery.propTypes = {
 };
 
 Recovery.defaultProps = {
-  // handlers
-  handleChange: (e) => {
-    console.log('Handle change...');
-  },
-  handleRecover: (e) => {
-    console.log('Handle recover password...');
-  },
-  handleShowLogin: (e) => {
-    console.log('Handle show login...');
-  },
-  // styles
   styles: {}
 };
 

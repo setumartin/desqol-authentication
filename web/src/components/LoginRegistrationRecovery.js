@@ -121,22 +121,9 @@ LoginRegistrationRecovery.propTypes = {
 };
 
 LoginRegistrationRecovery.defaultProps = {
-  // labels
   title: 'Welcome',
-  // fields
   isLogin: false,
   isRecoveringPassword: false,
-  // handlers
-  handleRegister: (e) => {
-    console.log('Handle register...');
-  },
-  handleLogin: (e) => {
-    console.log('Handle login...');
-  },
-  handleRecover: (e) => {
-    console.log('Handle recovery...');
-  },
-  // styles
   styles: {}
 };
 

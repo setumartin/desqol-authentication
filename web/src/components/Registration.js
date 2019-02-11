@@ -105,17 +105,6 @@ Registration.propTypes = {
 };
 
 Registration.defaultProps = {
-  // handlers
-  handleChange: (e) => {
-    console.log('Handle change...');
-  },
-  handleRegister: (e) => {
-    console.log('Handle register...');
-  },
-  handleShowLogin: (e) => {
-    console.log('Handle show login...');
-  },
-  // styles
   styles: {}
 };
 
