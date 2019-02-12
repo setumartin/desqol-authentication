@@ -11,11 +11,19 @@ services:
    volumes:
     - .:/app
    tty: true
+   networks:
+    - "net"
 
  mongo:
   image: mongo
   restart: always
-  environment:
-    MONGO_INITDB_ROOT_USERNAME: root
-    MONGO_INITDB_ROOT_PASSWORD: example
+  ports:
+    - "27017:27017"
+  networks:
+   - "net"
+
+
+networks:
+  net:
+    driver: bridge
  
