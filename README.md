@@ -1,9 +1,34 @@
 # `desqol-auth`
 
-The `desqol-auth` project has two components:
+The `desqol-auth` server requires Python 3 and MongoDB.
 
-* `auth-server`
+To install the dependencies:
 
-* `auth-web`
+```sh
+brew install mongodb
+```
 
-Please see the READMEs in each of the sub-folders for details.
+```sh
+pip3 install tornado PyNaCl motor
+```
+
+To start MongoDB:
+
+```sh
+brew services start mongodb
+```
+
+To create the collection in MongoDB:
+```
+mongo mongodb://localhost:27017
+> use auth;
+> db.createCollection('users');
+````
+
+To start the server:
+
+```sh
+python3 run_server.py
+```
+
+The server is available on port 4000.
