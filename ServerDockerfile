@@ -11,9 +11,6 @@ ADD server /app/server
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
-# Make port 8080 available to the world outside this container
-EXPOSE 443
-
 # Run app.py when the container launches
 # Note -u means unbuffered, otherwise there is no output to the logs
 CMD ["python", "-u", "server/run_server.py"]
