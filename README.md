@@ -5,7 +5,8 @@ The `desqol-auth` server requires Python 3 and MongoDB.
 To install the dependencies:
 
 ```sh
-brew install mongodb
+brew tap mongodb/brew
+brew install mongodb-community
 ```
 
 ```sh
@@ -15,13 +16,14 @@ pip3 install tornado PyNaCl motor
 To start MongoDB:
 
 ```sh
-brew services start mongodb
+brew services start mongodb/brew/mongodb-community
 ```
 
 To create the collection in MongoDB:
 ```
 mongo mongodb://localhost:27017
 > use auth;
+> db.users.drop();
 > db.createCollection('users');
 ````
 
