@@ -1,6 +1,6 @@
-# `desqol-auth`
+# `desqol-authentication`
 
-The `desqol-auth` server requires Python 3 and MongoDB.
+The `desqol-authentication` server requires Python 3 and MongoDB.
 
 To install the dependencies:
 
