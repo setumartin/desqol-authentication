@@ -2,14 +2,19 @@
 
 The `desqol-authentication` server requires Python 3 and MongoDB.
 
-To install the dependencies:
+## Installation on macOS
+
+To install MongoDB:
 
 ```sh
 brew tap mongodb/brew
 brew install mongodb-community
 ```
 
+To install Python 3 and the required libraries:
+
 ```sh
+brew install python3
 pip3 install tornado PyNaCl motor
 ```
 
