@@ -20,6 +20,7 @@ brew services start mongodb/brew/mongodb-community
 ```
 
 To create the collection in MongoDB:
+
 ```
 mongo mongodb://localhost:27017
 > use auth;
