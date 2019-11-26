@@ -1,7 +1,7 @@
 PORT = 4000
 
 MONGODB_HOST = {
-    'host': 'mongo',
+    'host': 'localhost',
     'port': 27017
 }
 
