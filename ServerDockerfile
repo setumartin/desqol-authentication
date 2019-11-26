@@ -13,6 +13,6 @@ RUN pip install -r requirements.txt
 
 # Run app.py when the container launches
 # Note -u means unbuffered, otherwise there is no output to the logs
-CMD ["python", "-u", "server/run_server.py"]
+CMD ["python", "-u", "run_server.py"]
 
 
