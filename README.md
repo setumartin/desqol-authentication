@@ -2,7 +2,15 @@
 
 The `desqol-authentication` server requires Python 3 and MongoDB.
 
-## Installation on macOS
+## Setup using Docker
+
+```sh
+docker-compose up
+```
+
+The server is available on port 4000.
+
+## Setup without Docker on macOS
 
 To install MongoDB:
 
@@ -15,7 +23,7 @@ To install Python 3 and the required libraries:
 
 ```sh
 brew install python3
-pip3 install tornado PyNaCl motor
+pip3 install -r requirements.txt
 ```
 
 To start MongoDB:
@@ -40,3 +48,12 @@ python3 run_server.py
 ```
 
 The server is available on port 4000.
+
+## Test the Server
+
+You can test the server using:
+
+```sh
+curl localhost:4000/desqol-auth # this should return a welcome message
+curl -X POST localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.com", "password":"pass"}'
+```

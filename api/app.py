@@ -18,20 +18,18 @@ class Application(Application):
 
     def __init__(self):
         handlers = [
-            (r'/', WelcomeHandler),
-            (r'/api', WelcomeHandler),
-            (r'/api/registration', RegistrationHandler),
-            (r'/api/login', LoginHandler),
-            (r'/api/logout', LogoutHandler),
-            (r'/api/user', UserHandler),
-            (r'/api/password/reset', PasswordResetHandler),
-            (r'/api/password/reset/confirm', PasswordResetConfirmHandler),
-            (r'/api/password/change', PasswordChangeHandler)
+            (r'/desqol-auth', WelcomeHandler),
+            (r'/desqol-auth/api', WelcomeHandler),
+            (r'/desqol-auth/api/registration', RegistrationHandler),
+            (r'/desqol-auth/api/login', LoginHandler),
+            (r'/desqol-auth/api/logout', LogoutHandler),
+            (r'/desqol-auth/api/user', UserHandler),
+            (r'/desqol-auth/api/password/reset', PasswordResetHandler),
+            (r'/desqol-auth/api/password/reset/confirm', PasswordResetConfirmHandler),
+            (r'/desqol-auth/api/password/change', PasswordChangeHandler)
         ]
 
-        settings = dict(
-            login_url='/login'
-        )
+        settings = dict()
 
         super(Application, self).__init__(handlers, **settings)
 
