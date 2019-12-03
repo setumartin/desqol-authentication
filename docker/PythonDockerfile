@@ -7,9 +7,10 @@ RUN mkdir /app
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-ADD requirements.txt /app
-ADD api /app
-ADD run_server.py /app
+ADD /requirements.txt .
+ADD /api ./api
+ADD /run_server.py .
+ADD /docker/conf.py ./api/conf.py
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt

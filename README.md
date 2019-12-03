@@ -4,10 +4,6 @@ The `desqol-authentication` server requires Python 3 and MongoDB.
 
 ## Setup using Docker
 
-Edit `api/conf.py` and change `localhost` to `mongo`.
-
-Then:
-
 ```sh
 docker-compose build
 docker-compose up
@@ -15,7 +11,7 @@ docker-compose up
 
 The server is available on port 4000.
 
-## Setup without Docker on macOS
+## Setup on macOS without Docker
 
 To install MongoDB:
 

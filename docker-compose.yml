@@ -1,22 +1,17 @@
-version: '3.3'
+version: "3.3"
 
 services:
-
  server:
    build:
     context: .
-    dockerfile: ServerDockerfile
+    dockerfile: docker/PythonDockerfile
    ports:
     - "4000:4000"
-   volumes:
-    - .:/app
-   tty: true
    networks:
     - "net"
 
  mongo:
   image: mongo
-  restart: always
   ports:
     - "27017:27017"
   networks:
