@@ -1,5 +1,7 @@
 # `desqol-authentication`
 
+This project provides an authentication service for the Erasmus+ DESQOL project. Please see the [[https://docs.google.com/document/d/1G-NltB3Cx_ampDHYeNDEd-Neke99mR7RDLxE5EMnRKM/edit][Setup Guide]] for further details.
+
 The `desqol-authentication` server requires Python 3 and MongoDB.
 
 ## Setup using Docker
@@ -55,6 +57,6 @@ The server is available on port 4000.
 You can test the server using:
 
 ```sh
-curl localhost:4000/desqol-auth # this should return a welcome message
-curl -X POST localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.com", "password":"pass"}'
+curl http://localhost:4000/desqol-auth # this should return a welcome message
+curl -X POST http://localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.com", "password":"pass"}'
 ```
