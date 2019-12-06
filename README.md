@@ -1,6 +1,9 @@
 # `desqol-authentication`
 
-This project provides an authentication service for the Erasmus+ DESQOL project. Please see the [[https://docs.google.com/document/d/1G-NltB3Cx_ampDHYeNDEd-Neke99mR7RDLxE5EMnRKM/edit][Setup Guide]] for further details.
+This project provides an authentication service for the Erasmus+
+DESQOL project. Please see the
+[https://docs.google.com/document/d/1G-NltB3Cx_ampDHYeNDEd-Neke99mR7RDLxE5EMnRKM/edit](Setup
+Guide) for further details.
 
 The `desqol-authentication` server requires Python 3 and MongoDB.
 
