@@ -27,10 +27,9 @@ class PasswordResetHandler(BaseHandler):
     @coroutine
     def post(self):
         try:
-            if self.request.body:
-                body = json_decode(self.request.body)
-                email = body['email']
-            else:
+            body = json_decode(self.request.body)
+            email = body['email']
+            if not isinstance(email, str):
                 raise Exception()
         except:
             self.send_error(400, message='You must provide an email address!')

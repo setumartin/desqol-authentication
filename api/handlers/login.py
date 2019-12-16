@@ -24,9 +24,9 @@ class LoginHandler(BaseHandler):
         }
 
         yield self.db.users.update_one({
-          'email': email
+            'email': email
         }, {
-          '$set': token
+            '$set': token
         })
 
         return token
@@ -34,11 +34,12 @@ class LoginHandler(BaseHandler):
     @coroutine
     def post(self):
         try:
-            if self.request.body:
-                body = json_decode(self.request.body)
-                email = body['email']
-                password = body['password']
-            else:
+            body = json_decode(self.request.body)
+            email = body['email']
+            if not isinstance(email, str):
+                raise Exception()
+            password = body['password']
+            if not isinstance(password, str):
                 raise Exception()
         except:
             self.send_error(400, message='You must provide an email address and password!')

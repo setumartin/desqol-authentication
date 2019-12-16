@@ -1,6 +1,6 @@
 from nacl.exceptions import InvalidkeyError
-from nacl.pwhash import verify, str
-from tornado.escape import utf8
+from nacl.pwhash import verify, str as nacl_str
+from tornado.escape import json_decode, utf8
 from tornado.gen import coroutine
 
 from .base import BaseHandler
@@ -10,12 +10,13 @@ class PasswordChangeHandler(BaseHandler):
     @coroutine
     def post(self):
         try:
-            if self.request.body:
-                body = tornado.escape.json_decode(self.request.body)
-                email = body['email']
-                password = body['password']
-            else:
-              raise Exception()
+            body = json_decode(self.request.body)
+            email = body['email']
+            if not isinstance(email, str):
+                raise Exception()
+            password = body['password']
+            if not isinstance(password, str):
+                raise Exception()
         except:
             self.send_error(400, message='You must provide an email address and password!')
             return
@@ -36,7 +37,7 @@ class PasswordChangeHandler(BaseHandler):
             self.send_error(403, message='The email address and password are invalid!')
             return
 
-        password_hash = yield self.executor.submit(str, utf8(password))
+        password_hash = yield self.executor.submit(nacl_str, utf8(password))
 
         yield self.db.users.update_one({
             'email': email,

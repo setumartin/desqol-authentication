@@ -11,10 +11,13 @@ class AuthHandler(BaseHandler):
         super(AuthHandler, self).prepare()
         
         if self.request.method == 'OPTIONS':
-          return
+            return
 
-        token = self.request.headers.get('X-Token')
-        if not token:
+        try:
+            token = self.request.headers.get('X-Token')
+            if not token:
+              raise Exception()
+        except:
             self.current_user = None
             self.send_error(400, message='You must provide a token!')
             return

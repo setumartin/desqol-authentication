@@ -1,4 +1,3 @@
-from nacl.pwhash import str
 from tornado.escape import json_decode, utf8
 from tornado.gen import coroutine
 from tornado.web import authenticated
@@ -18,10 +17,9 @@ class UserHandler(AuthHandler):
     @authenticated
     def put(self):
         try:
-            if self.request.body:
-                body = json_decode(self.request.body)
-                display_name = body['displayName']
-            else:
+            body = json_decode(self.request.body)
+            display_name = body['displayName']
+            if not isinstance(display_name, str):
                 raise Exception()
         except:
             self.send_error(400, message='You must provide a displayName!')

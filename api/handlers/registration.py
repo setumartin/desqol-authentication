@@ -1,4 +1,4 @@
-from nacl.pwhash import str
+from nacl.pwhash import str as nacl_str
 from tornado.escape import json_decode, utf8
 from tornado.gen import coroutine
 
@@ -9,14 +9,17 @@ class RegistrationHandler(BaseHandler):
     @coroutine
     def post(self):
         try:
-          if self.request.body:
-              body = json_decode(self.request.body)
-              email = body['email']
-              password = body['password']
-              display_name = body['displayName']
-          else:
-            raise Exception()
-        except Exception:
+            body = json_decode(self.request.body)
+            email = body['email']
+            if not isinstance(email, str):
+                raise Exception()
+            password = body['password']
+            if not isinstance(password, str):
+                raise Exception()
+            display_name = body['displayName']
+            if not isinstance(display_name, str):
+                raise Exception()
+        except Exception as e:
             self.send_error(400, message='You must provide an email address, password and displayName!')
             return
 
@@ -38,7 +41,7 @@ class RegistrationHandler(BaseHandler):
             self.send_error(409, message='A user with the given email address already exists!')
             return
 
-        password_hash = yield self.executor.submit(str, utf8(password))
+        password_hash = yield self.executor.submit(nacl_str, utf8(password))
 
         yield self.db.users.insert_one({
             'email': email,
