@@ -18,8 +18,8 @@ class Application(Application):
 
     def __init__(self):
         handlers = [
-            (r'/desqol-auth', WelcomeHandler),
-            (r'/desqol-auth/api', WelcomeHandler),
+            (r'/desqol-auth/?', WelcomeHandler),
+            (r'/desqol-auth/api/?', WelcomeHandler),
             (r'/desqol-auth/api/registration', RegistrationHandler),
             (r'/desqol-auth/api/login', LoginHandler),
             (r'/desqol-auth/api/logout', LogoutHandler),
