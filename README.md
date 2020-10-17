@@ -28,7 +28,10 @@ brew install mongodb-community
 To install Python 3 and the required libraries:
 
 ```sh
-brew install python3
+brew install pyenv
+pyenv install 3.9.0
+eval "$(pyenv init -)"
+pyenv global 3.9.0
 pip3 install -r requirements.txt
 ```
 
