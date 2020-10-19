@@ -8,8 +8,8 @@ from api.handlers.welcome import WelcomeHandler
 class WelcomeHandlerTest(AsyncHTTPTestCase):
 
     @classmethod
-    def setUpClass(clazz):
-        clazz.my_app = Application([(r'/', WelcomeHandler)])
+    def setUpClass(self):
+        self.my_app = Application([(r'/', WelcomeHandler)])
 
     def get_new_ioloop(self):
         return IOLoop.current()
@@ -17,7 +17,9 @@ class WelcomeHandlerTest(AsyncHTTPTestCase):
     def get_app(self):
         return self.my_app
 
-    def test(self):
-        response = self.fetch('/')
+    def test_welcome(self):
+        response = self.fetch('/', method='GET')
+        self.assertEqual(200, response.code)
+
         body = json_decode(response.body)
         self.assertIsNotNone(body['message'])

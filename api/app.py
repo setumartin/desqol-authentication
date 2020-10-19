@@ -1,7 +1,9 @@
 from concurrent.futures import ThreadPoolExecutor
+from motor import MotorClient
 from nacl.utils import random
 from tornado.web import Application
-from motor import MotorClient
+
+from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, APP_SECRETKEY_SIZE
 
 from .handlers.welcome import WelcomeHandler
 from .handlers.registration import RegistrationHandler
@@ -11,8 +13,6 @@ from .handlers.user import UserHandler
 from .handlers.pwreset import PasswordResetHandler
 from .handlers.pwconfirm import PasswordResetConfirmHandler
 from .handlers.pwchange import PasswordChangeHandler
-
-from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, APP_SECRETKEY_SIZE
 
 class Application(Application):
 
