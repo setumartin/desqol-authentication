@@ -15,7 +15,7 @@ class LogoutHandler(AuthHandler):
                 'token': None
             }
         })
-        
+
         self.current_user = None
 
         self.set_status(200)

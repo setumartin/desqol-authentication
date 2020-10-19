@@ -9,7 +9,7 @@ class AuthHandler(BaseHandler):
     @coroutine
     def prepare(self):
         super(AuthHandler, self).prepare()
-        
+
         if self.request.method == 'OPTIONS':
             return
 

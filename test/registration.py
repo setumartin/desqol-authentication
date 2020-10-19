@@ -1,7 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
 from json import dumps
 from motor import MotorClient
-from nacl.utils import random
 from tornado.escape import json_decode
 from tornado.ioloop import IOLoop
 from tornado.testing import AsyncHTTPTestCase
@@ -17,15 +16,18 @@ class RegistrationHandlerTest(AsyncHTTPTestCase):
 
     @classmethod
     def setUpClass(self):
-        self.my_app = Application([(r'/', RegistrationHandler)])
+        self.my_app = Application([(r'/registration', RegistrationHandler)])
 
         self.my_app.db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
-        self.my_app.db.users.drop()
 
         self.my_app.executor = ThreadPoolExecutor(WORKERS)
 
-    @classmethod
+    def setUp(self):
+        super().setUp()
+        self.my_app.db.users.drop()
+
     def tearDown(self):
+        super().tearDown()
         self.my_app.db.users.drop()
 
     def get_new_ioloop(self):
@@ -40,9 +42,21 @@ class RegistrationHandlerTest(AsyncHTTPTestCase):
           'password': 'testPassword',
           'displayName': 'testDisplayName'
         }
-        response = self.fetch('/',, body=dumps(body))
+        response = self.fetch('/registration', method='POST', body=dumps(body))
         self.assertEqual(200, response.code)
 
-        body2 = json_decode(response.body)
-        self.assertIsNotNone(body2['email'])
-        self.assertIsNotNone(body2['displayName'])
+        body_2 = json_decode(response.body)
+        self.assertIsNotNone(body_2['email'])
+        self.assertIsNotNone(body_2['displayName'])
+
+    def test_registration_duplicate(self):
+        body = {
+          'email': 'testEmail',
+          'password': 'testPassword',
+          'displayName': 'testDisplayName'
+        }
+        response = self.fetch('/registration', method='POST', body=dumps(body))
+        self.assertEqual(200, response.code)
+
+        response_2 = self.fetch('/registration', method='POST', body=dumps(body))
+        self.assertNotEqual(200, response_2.code)

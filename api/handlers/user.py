@@ -36,7 +36,7 @@ class UserHandler(AuthHandler):
                 'displayName': display_name
             }
         })
-        
+
         self.current_user['display_name'] = display_name
 
         self.set_status(200)

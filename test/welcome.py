@@ -9,7 +9,7 @@ class WelcomeHandlerTest(AsyncHTTPTestCase):
 
     @classmethod
     def setUpClass(self):
-        self.my_app = Application([(r'/', WelcomeHandler)])
+        self.my_app = Application([(r'/welcome', WelcomeHandler)])
 
     def get_new_ioloop(self):
         return IOLoop.current()
@@ -18,7 +18,7 @@ class WelcomeHandlerTest(AsyncHTTPTestCase):
         return self.my_app
 
     def test_welcome(self):
-        response = self.fetch('/', method='GET')
+        response = self.fetch('/welcome')
         self.assertEqual(200, response.code)
 
         body = json_decode(response.body)
