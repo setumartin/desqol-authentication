@@ -42,9 +42,9 @@ class RegistrationHandler(BaseHandler):
             return
 
         if self.whitelist:
-            whitelist = yield self.db.whitelist.find_one({'email': email})
-            if not entry:
-                self.send_error(400, message='The email address is not on the whitelist!')
+            user_2 = yield self.db.whitelist.find_one({'email': email})
+            if not user_2:
+                self.send_error(403, message='The email address is not on the whitelist!')
                 return
 
         password_hash = yield self.executor.submit(nacl_str, utf8(password))
