@@ -5,17 +5,14 @@ from tornado.web import Application
 
 from api.handlers.welcome import WelcomeHandler
 
-class WelcomeHandlerTest(AsyncHTTPTestCase):
+from .base import BaseTest
+
+class WelcomeHandlerTest(BaseTest):
 
     @classmethod
     def setUpClass(self):
         self.my_app = Application([(r'/welcome', WelcomeHandler)])
-
-    def get_new_ioloop(self):
-        return IOLoop.current()
-
-    def get_app(self):
-        return self.my_app
+        super().setUpClass()
 
     def test_welcome(self):
         response = self.fetch('/welcome')
