@@ -37,18 +37,21 @@ class RegistrationHandlerTest(AsyncHTTPTestCase):
         return self.my_app
 
     def test_registration(self):
+        email = 'testEmail'
+        displayName = 'testDisplayName'
+
         body = {
-          'email': 'testEmail',
+          'email': email,
           'password': 'testPassword',
-          'displayName': 'testDisplayName'
+          'displayName': displayName
         }
 
         response = self.fetch('/registration', method='POST', body=dumps(body))
         self.assertEqual(200, response.code)
 
         body_2 = json_decode(response.body)
-        self.assertIsNotNone(body_2['email'])
-        self.assertIsNotNone(body_2['displayName'])
+        self.assertEqual(email, body_2['email'])
+        self.assertEqual(displayName, body_2['displayName'])
 
     def test_registration_twice(self):
         body = {

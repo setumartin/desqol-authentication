@@ -11,19 +11,19 @@ from tornado.web import Application
 from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, APP_SECRETKEY_SIZE
 
 from api.handlers.login import LoginHandler
-from api.handlers.logout import LogoutHandler
 from api.handlers.registration import RegistrationHandler
+from api.handlers.user import UserHandler
 
 import urllib.parse
 
-class LogoutHandlerTest(AsyncHTTPTestCase):
+class UserHandlerTest(AsyncHTTPTestCase):
 
     @classmethod
     def setUpClass(self):
         self.my_app = Application([
           (r'/login', LoginHandler),
-          (r'/logout', LogoutHandler),
-          (r'/registration', RegistrationHandler)
+          (r'/registration', RegistrationHandler),
+          (r'/user', UserHandler)
         ])
 
         self.my_app.db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
@@ -36,19 +36,20 @@ class LogoutHandlerTest(AsyncHTTPTestCase):
         super().setUp()
         self.my_app.db.users.drop()
 
-        email = 'testEmail'
+        self.email = 'testEmail'
         password = 'testPassword'
+        self.displayName = 'testDisplayName'
 
         body = {
-          'email': email,
+          'email': self.email,
           'password': password,
-          'displayName': 'testDisplayName'
+          'displayName': self.displayName
         }
 
         response = self.fetch('/registration', method='POST', body=dumps(body))
 
         body_2 = {
-          'email': email,
+          'email': self.email,
           'password': password
         }
 
@@ -67,32 +68,37 @@ class LogoutHandlerTest(AsyncHTTPTestCase):
     def get_app(self):
         return self.my_app
 
-    def test_logout(self):
+    def test_user(self):
         headers = HTTPHeaders({'X-Token': self.token})
-        body = {}
 
-        response = self.fetch('/logout', headers=headers, method='POST', body=dumps(body))
+        response = self.fetch('/user', headers=headers)
         self.assertEqual(200, response.code)
 
-    def test_logout_without_token(self):
-        body = {}
+        body_2 = json_decode(response.body)
+        self.assertEqual(self.email, body_2['email'])
+        self.assertEqual(self.displayName, body_2['displayName'])
 
-        response = self.fetch('/logout', method='POST', body=dumps(body))
+    def test_user_without_token(self):
+        response = self.fetch('/user')
         self.assertEqual(400, response.code)
 
-    def test_logout_wrong_token(self):
+    def test_user_wrong_token(self):
         headers = HTTPHeaders({'X-Token': 'wrongToken'})
-        body = {}
 
-        response = self.fetch('/logout', method='POST', body=dumps(body))
+        response = self.fetch('/user')
         self.assertEqual(400, response.code)
 
-    def test_logout_twice(self):
-        headers = HTTPHeaders({'X-Token': self.token})
-        body = {}
+    def test_user_update(self):
+        newDisplayName = 'newDisplayName'
 
-        response = self.fetch('/logout', headers=headers, method='POST', body=dumps(body))
+        headers = HTTPHeaders({'X-Token': self.token})
+        body = {
+          'displayName': newDisplayName
+        }
+
+        response = self.fetch('/user', headers=headers, method='PUT', body=dumps(body))
         self.assertEqual(200, response.code)
 
-        response_2 = self.fetch('/logout', headers=headers, method='POST', body=dumps(body))
-        self.assertEqual(403, response_2.code)
+        body_2 = json_decode(response.body)
+        self.assertEqual(self.email, body_2['email'])
+        self.assertEqual(newDisplayName, body_2['displayName'])
