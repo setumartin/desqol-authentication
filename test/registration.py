@@ -42,6 +42,7 @@ class RegistrationHandlerTest(AsyncHTTPTestCase):
           'password': 'testPassword',
           'displayName': 'testDisplayName'
         }
+
         response = self.fetch('/registration', method='POST', body=dumps(body))
         self.assertEqual(200, response.code)
 
@@ -49,14 +50,15 @@ class RegistrationHandlerTest(AsyncHTTPTestCase):
         self.assertIsNotNone(body_2['email'])
         self.assertIsNotNone(body_2['displayName'])
 
-    def test_registration_duplicate(self):
+    def test_registration_twice(self):
         body = {
           'email': 'testEmail',
           'password': 'testPassword',
           'displayName': 'testDisplayName'
         }
+
         response = self.fetch('/registration', method='POST', body=dumps(body))
         self.assertEqual(200, response.code)
 
         response_2 = self.fetch('/registration', method='POST', body=dumps(body))
-        self.assertNotEqual(200, response_2.code)
+        self.assertEqual(409, response_2.code)
