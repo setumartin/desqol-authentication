@@ -45,12 +45,12 @@ class RegistrationHandlerTest(AsyncHTTPTestCase):
 
     def test_registration(self):
         email = 'testEmail'
-        displayName = 'testDisplayName'
+        display_name = 'testDisplayName'
 
         body = {
           'email': email,
           'password': 'testPassword',
-          'displayName': displayName
+          'displayName': display_name
         }
 
         response = self.fetch('/registration', method='POST', body=dumps(body))
@@ -58,7 +58,7 @@ class RegistrationHandlerTest(AsyncHTTPTestCase):
 
         body_2 = json_decode(response.body)
         self.assertEqual(email, body_2['email'])
-        self.assertEqual(displayName, body_2['displayName'])
+        self.assertEqual(display_name, body_2['displayName'])
 
     def test_registration_twice(self):
         body = {

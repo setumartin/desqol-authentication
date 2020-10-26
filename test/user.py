@@ -1,8 +1,10 @@
 from concurrent.futures import ThreadPoolExecutor
 from json import dumps
 from motor import MotorClient
+from nacl.pwhash import str as nacl_str
 from nacl.utils import random
-from tornado.escape import json_decode
+from tornado.escape import json_decode, utf8
+from tornado.gen import coroutine
 from tornado.httputil import HTTPHeaders
 from tornado.ioloop import IOLoop
 from tornado.testing import AsyncHTTPTestCase
@@ -10,8 +12,6 @@ from tornado.web import Application
 
 from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, WHITELIST, APP_SECRETKEY_SIZE
 
-from api.handlers.login import LoginHandler
-from api.handlers.registration import RegistrationHandler
 from api.handlers.user import UserHandler
 
 import urllib.parse
@@ -20,11 +20,7 @@ class UserHandlerTest(AsyncHTTPTestCase):
 
     @classmethod
     def setUpClass(self):
-        self.my_app = Application([
-          (r'/login', LoginHandler),
-          (r'/registration', RegistrationHandler),
-          (r'/user', UserHandler)
-        ])
+        self.my_app = Application([(r'/user', UserHandler)])
 
         self.my_app.db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
 
@@ -40,32 +36,35 @@ class UserHandlerTest(AsyncHTTPTestCase):
     def get_app(self):
         return self.my_app
 
+    @coroutine
+    def register(self):
+        password_hash = yield self.get_app().executor.submit(nacl_str, utf8(self.password))
+        yield self.get_app().db.users.insert_one({
+            'email': self.email,
+            'passwordHash': password_hash,
+            'displayName': self.display_name
+        })
+
+    @coroutine
+    def login(self):
+        yield self.get_app().db.users.update_one({
+            'email': self.email
+        }, {
+            '$set': { 'token': self.token, 'expiresIn': 2147483647 }
+        })
+
     def setUp(self):
         super().setUp()
         self.get_app().db.users.drop()
         self.get_app().db.whitelist.drop()
 
         self.email = 'testEmail'
-        password = 'testPassword'
-        self.displayName = 'testDisplayName'
+        self.password = 'testPassword'
+        self.display_name = 'testDisplayName'
+        self.token = 'testToken'
 
-        body = {
-          'email': self.email,
-          'password': password,
-          'displayName': self.displayName
-        }
-
-        response = self.fetch('/registration', method='POST', body=dumps(body))
-
-        body_2 = {
-          'email': self.email,
-          'password': password
-        }
-
-        response_2 = self.fetch('/login', method='POST', body=dumps(body_2))
-        body_3 = json_decode(response_2.body)
-
-        self.token = body_3['token']
+        IOLoop.current().run_sync(self.register)
+        IOLoop.current().run_sync(self.login)
 
     def tearDown(self):
         super().tearDown()
@@ -80,7 +79,7 @@ class UserHandlerTest(AsyncHTTPTestCase):
 
         body_2 = json_decode(response.body)
         self.assertEqual(self.email, body_2['email'])
-        self.assertEqual(self.displayName, body_2['displayName'])
+        self.assertEqual(self.display_name, body_2['displayName'])
 
     def test_user_without_token(self):
         response = self.fetch('/user')
@@ -93,11 +92,11 @@ class UserHandlerTest(AsyncHTTPTestCase):
         self.assertEqual(400, response.code)
 
     def test_user_update(self):
-        newDisplayName = 'newDisplayName'
+        display_name_2 = 'newDisplayName'
 
         headers = HTTPHeaders({'X-Token': self.token})
         body = {
-          'displayName': newDisplayName
+          'displayName': display_name_2
         }
 
         response = self.fetch('/user', headers=headers, method='PUT', body=dumps(body))
@@ -105,4 +104,4 @@ class UserHandlerTest(AsyncHTTPTestCase):
 
         body_2 = json_decode(response.body)
         self.assertEqual(self.email, body_2['email'])
-        self.assertEqual(newDisplayName, body_2['displayName'])
+        self.assertEqual(display_name_2, body_2['displayName'])
