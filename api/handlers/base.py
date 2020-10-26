@@ -12,6 +12,10 @@ class BaseHandler(RequestHandler):
         return self.application.executor
 
     @property
+    def whitelist(self):
+        return self.application.whitelist
+
+    @property
     def hmac_key(self):
         return self.application.hmac_key
 

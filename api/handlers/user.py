@@ -22,11 +22,11 @@ class UserHandler(AuthHandler):
             if not isinstance(display_name, str):
                 raise Exception()
         except:
-            self.send_error(400, message='You must provide a displayName!')
+            self.send_error(400, message='You must provide a display name!')
             return
 
         if not display_name:
-            self.send_error(400, message='The displayName is invalid!')
+            self.send_error(400, message='The display name is invalid!')
             return
 
         yield self.db.users.update_one({

@@ -8,7 +8,7 @@ from tornado.ioloop import IOLoop
 from tornado.testing import AsyncHTTPTestCase
 from tornado.web import Application
 
-from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, APP_SECRETKEY_SIZE
+from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, WHITELIST, APP_SECRETKEY_SIZE
 
 from api.handlers.login import LoginHandler
 from api.handlers.logout import LogoutHandler
@@ -30,11 +30,20 @@ class LogoutHandlerTest(AsyncHTTPTestCase):
 
         self.my_app.executor = ThreadPoolExecutor(WORKERS)
 
+        self.my_app.whitelist = WHITELIST
+
         self.my_app.hmac_key = random(size=APP_SECRETKEY_SIZE)
+
+    def get_new_ioloop(self):
+        return IOLoop.current()
+
+    def get_app(self):
+        return self.my_app
 
     def setUp(self):
         super().setUp()
-        self.my_app.db.users.drop()
+        self.get_app().db.users.drop()
+        self.get_app().db.whitelist.drop()
 
         email = 'testEmail'
         password = 'testPassword'
@@ -59,13 +68,8 @@ class LogoutHandlerTest(AsyncHTTPTestCase):
 
     def tearDown(self):
         super().tearDown()
-        self.my_app.db.users.drop()
-
-    def get_new_ioloop(self):
-        return IOLoop.current()
-
-    def get_app(self):
-        return self.my_app
+        self.get_app().db.users.drop()
+        self.get_app().db.whitelist.drop()
 
     def test_logout(self):
         headers = HTTPHeaders({'X-Token': self.token})

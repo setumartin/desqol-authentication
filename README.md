@@ -47,7 +47,9 @@ To create the collection in MongoDB:
 mongo mongodb://localhost:27017
 > use auth;
 > db.users.drop();
+> db.whitelist.drop();
 > db.createCollection('users');
+> db.createCollection('whitelist');
 ````
 
 To start the server:

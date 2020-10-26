@@ -3,7 +3,7 @@ from motor import MotorClient
 from nacl.utils import random
 from tornado.web import Application
 
-from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, APP_SECRETKEY_SIZE
+from .conf import MONGODB_HOST, MONGODB_DBNAME, WORKERS, WHITELIST, APP_SECRETKEY_SIZE
 
 from .handlers.welcome import WelcomeHandler
 from .handlers.registration import RegistrationHandler
@@ -36,5 +36,7 @@ class Application(Application):
         self.db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
 
         self.executor = ThreadPoolExecutor(WORKERS)
+
+        self.whitelist = WHITELIST
 
         self.hmac_key = random(size=APP_SECRETKEY_SIZE)

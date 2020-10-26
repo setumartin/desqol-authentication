@@ -20,7 +20,7 @@ class RegistrationHandler(BaseHandler):
             if not isinstance(display_name, str):
                 raise Exception()
         except Exception as e:
-            self.send_error(400, message='You must provide an email address, password and displayName!')
+            self.send_error(400, message='You must provide an email address, password and display name!')
             return
 
         if not email:
@@ -32,7 +32,7 @@ class RegistrationHandler(BaseHandler):
             return
 
         if not display_name:
-            self.send_error(400, message='The displayName is invalid!')
+            self.send_error(400, message='The display name is invalid!')
             return
 
         user = yield self.db.users.find_one({'email': email})
@@ -40,6 +40,12 @@ class RegistrationHandler(BaseHandler):
         if user is not None:
             self.send_error(409, message='A user with the given email address already exists!')
             return
+
+        if self.whitelist:
+            whitelist = yield self.db.whitelist.find_one({'email': email})
+            if not entry:
+                self.send_error(400, message='The email address is not on the whitelist!')
+                return
 
         password_hash = yield self.executor.submit(nacl_str, utf8(password))
 
