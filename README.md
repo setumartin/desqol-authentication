@@ -67,4 +67,18 @@ You can test the server using:
 ```sh
 curl http://localhost:4000/desqol-auth # this should return a welcome message
 curl -X POST http://localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.com", "password":"pass"}'
+curl -X POST http://localhost:4000/desqol-auth/api/registration -d '{"email":"foo@bar.com", "password":"pass", "displayName":"myName"}'
+
+```
+
+## add user scope in db, needed to download user event data
+
+```
+$ docker-compose up -d
+$ docker-compose exec mongo sh
+# mongo
+> use auth;
+> db.users.update({email:"test_with_read_scope@user.com"},{$set:{scope:"read:db"}});
+
+
 ```
