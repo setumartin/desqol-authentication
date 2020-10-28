@@ -49,6 +49,48 @@ mongo mongodb://localhost:27017
 > db.users.drop();
 > db.whitelist.drop();
 > db.createCollection('users');
+> 
+````
+
+To start the server:
+
+```sh
+python3 run_server.py
+```
+
+The server is available on port 4000.
+
+## Setup on Windows without Docker
+
+To install MongoDB:
+
+* visit [here](https://www.mongodb.com/try/download/community?tck=docs_server)
+* username & domain as described [here](https://stackoverflow.com/questions/52092528/mongodb-community-error-when-installing-service-as-local-or-domain-user)
+
+
+To install Python 3 and the required libraries:
+
+```cmd
+py -m pip install --user virtualenv
+py -m venv env
+.\env\Scripts\activate
+pip install -r requirements.txt
+```
+
+To start MongoDB:
+
+```sh
+"C:\Program Files\MongoDB\Server\4.4\bin\mongo"
+```
+
+To create the collection in MongoDB:
+
+```
+mongo mongodb://localhost:27017
+> use auth;
+> db.users.drop();
+> db.whitelist.drop();
+> db.createCollection('users');
 > db.createCollection('whitelist');
 ````
 

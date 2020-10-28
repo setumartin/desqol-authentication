@@ -6,14 +6,11 @@ from .base import BaseHandler
 
 class AuthHandler(BaseHandler):
 
-    def user_has_scope(self, user, requested_scope): 
-        if requested_scope is None:
-            return True
-        if 'scope' not in user:
-            return False
-        if requested_scope in user['scope']:
-            return True
-        return False
+    def get_scope(self, user):
+        try: 
+            return user['scope']
+        except KeyError:
+            return ''
 
     @coroutine
     def prepare(self):
@@ -51,13 +48,8 @@ class AuthHandler(BaseHandler):
             self.send_error(403, message='Your token has expired!')
             return
 
-        requested_scope = self.request.headers.get('X-Scope')
-        if not self.user_has_scope(user, requested_scope): 
-            self.current_user = None
-            self.send_error(403, message='You do not have requested scope!')
-            return
-
         self.current_user = {
             'email': user['email'],
-            'display_name': user['displayName']
+            'display_name': user['displayName'],
+            'scope': self.get_scope(user)
         }
