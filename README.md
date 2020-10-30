@@ -50,7 +50,7 @@ mongo mongodb://localhost:27017
 > db.whitelist.drop();
 > db.createCollection('users');
 > 
-````
+```
 
 To start the server:
 
@@ -92,7 +92,7 @@ mongo mongodb://localhost:27017
 > db.whitelist.drop();
 > db.createCollection('users');
 > db.createCollection('whitelist');
-````
+```
 
 To start the server:
 
@@ -118,9 +118,11 @@ curl -X POST http://localhost:4000/desqol-auth/api/registration -d '{"email":"fo
 ```
 $ docker-compose up -d
 $ docker-compose exec mongo sh
-# mongo
+
+```
+
+```
 > use auth;
 > db.users.update({email:"test_with_read_scope@user.com"},{$set:{scope:"read:db"}});
-
 
 ```
