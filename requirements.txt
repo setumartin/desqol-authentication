@@ -1,3 +1,4 @@
+click==7.1.2
 motor==2.3.0
 pynacl==1.4.0
 tornado==6.0.4

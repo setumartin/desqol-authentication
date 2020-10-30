@@ -41,15 +41,13 @@ To start MongoDB:
 brew services start mongodb/brew/mongodb-community
 ```
 
-To create the collection in MongoDB:
+To drop any existing collections in MongoDB:
 
 ```
 mongo mongodb://localhost:27017
 > use auth;
 > db.users.drop();
 > db.whitelist.drop();
-> db.createCollection('users');
-> 
 ```
 
 To start the server:
@@ -83,15 +81,13 @@ To start MongoDB:
 "C:\Program Files\MongoDB\Server\4.4\bin\mongo"
 ```
 
-To create the collection in MongoDB:
+To drop any existing collections in MongoDB:
 
 ```
 mongo mongodb://localhost:27017
 > use auth;
 > db.users.drop();
 > db.whitelist.drop();
-> db.createCollection('users');
-> db.createCollection('whitelist');
 ```
 
 To start the server:
