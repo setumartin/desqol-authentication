@@ -24,9 +24,9 @@ class Application(Application):
             (r'/desqol-auth/api/login', LoginHandler),
             (r'/desqol-auth/api/logout', LogoutHandler),
             (r'/desqol-auth/api/user', UserHandler),
-            (r'/desqol-auth/api/password/reset', PasswordResetHandler),
-            (r'/desqol-auth/api/password/reset/confirm', PasswordResetConfirmHandler),
-            (r'/desqol-auth/api/password/change', PasswordChangeHandler)
+            # (r'/desqol-auth/api/password/reset', PasswordResetHandler),
+            # (r'/desqol-auth/api/password/reset/confirm', PasswordResetConfirmHandler),
+            # (r'/desqol-auth/api/password/change', PasswordChangeHandler)
         ]
 
         settings = dict()
