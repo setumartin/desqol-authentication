@@ -36,6 +36,14 @@ class UserHandlerTest(BaseTest):
             '$set': { 'token': self.token, 'expiresIn': 2147483647 }
         })
 
+    @coroutine
+    def changeScope(self):
+        yield self.get_app().db.users.update_one({
+            'email': self.email
+        }, {
+            '$set': { 'scope': self.scope}
+        })
+
     def setUp(self):
         super().setUp()
 
@@ -43,6 +51,7 @@ class UserHandlerTest(BaseTest):
         self.password = 'testPassword'
         self.display_name = 'testDisplayName'
         self.token = 'testToken'
+        self.scope = 'testScope'
 
         IOLoop.current().run_sync(self.register)
         IOLoop.current().run_sync(self.login)
@@ -81,3 +90,20 @@ class UserHandlerTest(BaseTest):
         body_2 = json_decode(response.body)
         self.assertEqual(self.email, body_2['email'])
         self.assertEqual(display_name_2, body_2['displayName'])
+
+    def test_user_change_scope(self):
+        headers = HTTPHeaders({'X-Token': self.token})
+
+        response = self.fetch('/user', headers=headers)
+
+        body = json_decode(response.body)
+
+        self.assertEqual('', body['scope'])
+
+        IOLoop.current().run_sync(self.changeScope)
+
+        response = self.fetch('/user', headers=headers)
+
+        body = json_decode(response.body)
+
+        self.assertEqual(self.scope, body['scope'])
