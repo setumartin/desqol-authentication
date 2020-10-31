@@ -1,3 +1,4 @@
+from json import dumps
 from nacl.pwhash import str as nacl_str
 from tornado.escape import json_decode, utf8
 from tornado.gen import coroutine
@@ -41,9 +42,13 @@ class RegistrationHandler(BaseHandler):
             self.send_error(409, message='A user with the given email address already exists!')
             return
 
+        gamify = None
+
         if self.whitelist:
             user_2 = yield self.db.whitelist.find_one({'email': email})
-            if not user_2:
+            if user_2:
+                gamify = user_2['gamify']
+            else:
                 self.send_error(403, message='The email address is not on the whitelist!')
                 return
 
@@ -52,10 +57,12 @@ class RegistrationHandler(BaseHandler):
         yield self.db.users.insert_one({
             'email': email,
             'passwordHash': password_hash,
-            'displayName': display_name
+            'displayName': display_name,
+            'gamify': gamify,
         })
 
         self.set_status(200)
         self.response['email'] = email
         self.response['displayName'] = display_name
+        self.response['gamify'] = gamify
         self.write_json()

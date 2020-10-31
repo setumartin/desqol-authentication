@@ -74,4 +74,5 @@ class LoginHandler(BaseHandler):
         self.set_status(200)
         self.response['token'] = token['token']
         self.response['expiresIn'] = token['expiresIn']
+        self.response['gamify'] = user.get('gamify')
         self.write_json()

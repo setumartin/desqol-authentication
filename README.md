@@ -116,12 +116,19 @@ python run_whitelist.py list
 
 ## Test the Server
 
-You can test the server using:
+You can run the automated tests using:
+
+```sh
+python run_test.py
+```
+
+You can interact with the server using:
 
 ```sh
 curl http://localhost:4000/desqol-auth # this should return a welcome message
-curl -X POST http://localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.com", "password":"pass"}'
 curl -X POST http://localhost:4000/desqol-auth/api/registration -d '{"email":"foo@bar.com", "password":"pass", "displayName":"myName"}'
+curl -X POST http://localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.com", "password":"pass"}'
+curl -X POST -H "X-Token: YOUR_TOKEN_GOES_HERE" http://localhost:4000/desqol-auth/api/logout
 
 ```
 

@@ -28,7 +28,7 @@ def insert_user(db, email, gamify):
     click.echo('SUCCESS: '  + email + ' is whitelisted!')
   else:
     click.echo('ERROR: '  + email + ' is already whitelisted!')
-    
+
 @coroutine
 def get_users(db):
   cur = db.whitelist.find()
@@ -51,7 +51,7 @@ def add(email, gamify):
 @cli.command()
 def list():
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
-    IOLoop.current().run_sync(lambda: get_users(db))  
+    IOLoop.current().run_sync(lambda: get_users(db))
 
 if __name__ == '__main__':
     cli()

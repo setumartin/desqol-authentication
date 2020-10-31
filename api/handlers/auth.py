@@ -7,7 +7,7 @@ from .base import BaseHandler
 class AuthHandler(BaseHandler):
 
     def get_scope(self, user):
-        try: 
+        try:
             return user['scope']
         except KeyError:
             return ''

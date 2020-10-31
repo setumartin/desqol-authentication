@@ -21,7 +21,8 @@ class WhitelistTest(BaseTest):
     @coroutine
     def whitelist(self):
         yield self.get_app().db.whitelist.insert_one({
-            'email': self.email
+            'email': self.email,
+            'gamify': True
         })
 
     def setUp(self):
