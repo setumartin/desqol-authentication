@@ -1,3 +1,4 @@
+import logging
 import unittest
 
 from test.login import LoginHandlerTest
@@ -9,4 +10,5 @@ from test.welcome import WelcomeHandlerTest
 from test.whitelist import WhitelistTest
 
 if __name__ == '__main__':
+    logging.getLogger('tornado.access').disabled = True
     unittest.main()

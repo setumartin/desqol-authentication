@@ -1,4 +1,5 @@
 import click
+from json import loads
 from motor.motor_tornado import MotorClient
 from tornado.gen import coroutine
 from tornado.ioloop import IOLoop
@@ -12,6 +13,12 @@ def get_user(db, email):
 
 @coroutine
 def insert_user(db, email, gamify):
+  if not isinstance(email, str):
+    click.echo('The email address is not valid!')
+    return
+  if not isinstance(gamify, bool):
+    click.echo('The gamify flag is not valid!')
+    return
   user = yield get_user(db, email)
   if user is None:
     yield db.whitelist.insert_one({
@@ -26,6 +33,7 @@ def insert_user(db, email, gamify):
 def get_users(db):
   cur = db.whitelist.find()
   docs = yield cur.to_list(length=None)
+  print('There are ' + str(len(docs)) + ' users on the whitelist:')
   for doc in docs:
     click.echo(doc)
 
@@ -38,7 +46,7 @@ def cli():
 @click.argument('gamify')
 def add(email, gamify):
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
-    IOLoop.current().run_sync(lambda: insert_user(db, email, gamify))
+    IOLoop.current().run_sync(lambda: insert_user(db, email, loads(gamify.lower())))
 
 @cli.command()
 def list():

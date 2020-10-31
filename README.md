@@ -7,7 +7,9 @@ for further details.
 
 The `desqol-authentication` server requires Python 3 and MongoDB.
 
-## Setup using Docker
+## Setup
+
+### Setup using Docker
 
 ```sh
 docker-compose build
@@ -16,7 +18,7 @@ docker-compose up
 
 The server is available on port 4000.
 
-## Setup on macOS without Docker
+### Setup on macOS without Docker
 
 To install MongoDB:
 
@@ -58,7 +60,7 @@ python3 run_server.py
 
 The server is available on port 4000.
 
-## Setup on Windows without Docker
+### Setup on Windows without Docker
 
 To install MongoDB:
 
@@ -97,6 +99,20 @@ python3 run_server.py
 ```
 
 The server is available on port 4000.
+
+## Whitelisting
+
+To add a user to the whitelist with email address `foo@bar.com` and a gamify flag of `true`:
+
+```sh
+python run_whitelist.py add foo@bar.com true
+```
+
+To list the users on the whitelist:
+
+```sh
+python run_whitelist.py list
+```
 
 ## Test the Server
 
