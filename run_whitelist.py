@@ -8,7 +8,9 @@ from api.conf import MONGODB_HOST, MONGODB_DBNAME, WHITELIST
 
 @coroutine
 def get_user(db, email):
-  user = yield db.whitelist.find_one({'email': email})
+  user = yield db.whitelist.find_one({
+    'email': email
+  }, {})
   return user
 
 @coroutine
@@ -31,7 +33,10 @@ def insert_user(db, email, gamify):
 
 @coroutine
 def get_users(db):
-  cur = db.whitelist.find()
+  cur = db.whitelist.find({}, {
+    'email': 1,
+    'gamify': 1
+  })
   docs = yield cur.to_list(length=None)
   print('There are ' + str(len(docs)) + ' users on the whitelist:')
   for doc in docs:

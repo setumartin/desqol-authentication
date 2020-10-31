@@ -33,6 +33,7 @@ class AuthHandler(BaseHandler):
         }, {
             'email': 1,
             'displayName': 1,
+            'gamify': 1,
             'expiresIn': 1,
             'scope': 1
         })
@@ -51,5 +52,6 @@ class AuthHandler(BaseHandler):
         self.current_user = {
             'email': user['email'],
             'display_name': user['displayName'],
+            'gamify': user.get('gamify'),
             'scope': self.get_scope(user)
         }

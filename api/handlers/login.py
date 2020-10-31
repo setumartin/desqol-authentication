@@ -53,7 +53,11 @@ class LoginHandler(BaseHandler):
             self.send_error(400, message='The password is invalid!')
             return
 
-        user = yield self.db.users.find_one({'email': email})
+        user = yield self.db.users.find_one({
+          'email': email
+        }, {
+          'passwordHash': 1
+        })
 
         if user is None:
             self.send_error(403, message='The email address and password are invalid!')
@@ -74,5 +78,4 @@ class LoginHandler(BaseHandler):
         self.set_status(200)
         self.response['token'] = token['token']
         self.response['expiresIn'] = token['expiresIn']
-        self.response['gamify'] = user.get('gamify')
         self.write_json()

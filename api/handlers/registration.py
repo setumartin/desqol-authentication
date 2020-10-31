@@ -36,7 +36,9 @@ class RegistrationHandler(BaseHandler):
             self.send_error(400, message='The display name is invalid!')
             return
 
-        user = yield self.db.users.find_one({'email': email})
+        user = yield self.db.users.find_one({
+          'email': email
+        }, {})
 
         if user is not None:
             self.send_error(409, message='A user with the given email address already exists!')
@@ -45,7 +47,11 @@ class RegistrationHandler(BaseHandler):
         gamify = None
 
         if self.whitelist:
-            user_2 = yield self.db.whitelist.find_one({'email': email})
+            user_2 = yield self.db.whitelist.find_one({
+              'email': email
+            }, {
+              'gamify': 1
+            })
             if user_2:
                 gamify = user_2['gamify']
             else:
