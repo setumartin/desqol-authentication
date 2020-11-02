@@ -10,6 +10,7 @@ WORKDIR /app
 ADD /requirements.txt .
 ADD /api ./api
 ADD /run_server.py .
+ADD /run_whitelist.py .
 ADD /docker/conf.py ./api/conf.py
 ADD /.git .git
 
