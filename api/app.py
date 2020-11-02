@@ -10,9 +10,6 @@ from .handlers.registration import RegistrationHandler
 from .handlers.login import LoginHandler
 from .handlers.logout import LogoutHandler
 from .handlers.user import UserHandler
-from .handlers.pwreset import PasswordResetHandler
-from .handlers.pwconfirm import PasswordResetConfirmHandler
-from .handlers.pwchange import PasswordChangeHandler
 
 class Application(Application):
 
