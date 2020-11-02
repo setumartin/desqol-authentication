@@ -16,6 +16,8 @@ services:
     - "27017:27017"
   networks:
    - "net"
+  volumes:
+   - ./Docker/MongoDB:/data/db
 
 networks:
   net:

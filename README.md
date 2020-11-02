@@ -1,9 +1,7 @@
 # `desqol-authentication`
 
 This project provides an authentication service for the Erasmus+
-DESQOL project. Please see the [Setup
-Guide](https://docs.google.com/document/d/1G-NltB3Cx_ampDHYeNDEd-Neke99mR7RDLxE5EMnRKM)
-for further details.
+DESQOL project.
 
 The `desqol-authentication` server requires Python 3 and MongoDB.
 
@@ -122,12 +120,42 @@ You can run the automated tests using:
 python run_test.py
 ```
 
-You can interact with the server using:
+## Usage
+
+To check that the server is running:
 
 ```sh
-curl http://localhost:4000/desqol-auth # this should return a welcome message
-curl -X POST http://localhost:4000/desqol-auth/api/registration -d '{"email":"foo@bar.com", "password":"pass", "displayName":"myName"}'
+http://localhost:4000/desqol-auth/api
+
+```
+
+To register a new user:
+
+```sh
+curl -X POST http://localhost:4000/desqol-auth/api/registration -d '{"email":"foo@bar.com", "password":"pass", "displayName":"Mr. Foo Bar"}'
+
+```
+
+You need to whitelist email addresses before you can register them.
+
+To login:
+
+```sh
 curl -X POST http://localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.com", "password":"pass"}'
+
+```
+
+This will return a token. To get all information regarding the current user:
+
+```sh
+curl -H "X-Token: YOUR_TOKEN_GOES_HERE" http://localhost:4000/desqol-auth/api/user
+
+```
+
+To logout:
+
+```sh
+
 curl -X POST -H "X-Token: YOUR_TOKEN_GOES_HERE" http://localhost:4000/desqol-auth/api/logout
 
 ```
