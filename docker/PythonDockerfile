@@ -11,6 +11,7 @@ ADD /requirements.txt .
 ADD /api ./api
 ADD /run_server.py .
 ADD /docker/conf.py ./api/conf.py
+ADD /.git .git
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt

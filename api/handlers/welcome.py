@@ -10,11 +10,11 @@ class WelcomeHandler(BaseHandler):
         self.response['message'] = 'Welcome to the Erasmus+ DESQOL Authentication Server!';
         git_commit_hash = environ.get('GIT_COMMIT_HASH')
         if git_commit_hash:
-            self.response['commit'] = environ['GIT_COMMIT_HASH'];
+            self.response['commit'] = git_commit_hash
         else:
             git_info = get_git_info()
             if git_info:
-                self.response['commit'] = git_info['commit'];
+                self.response['commit'] = git_info['commit']
             else:
                 self.response['commit'] = 'UNKNOWN'
         self.write_json()
