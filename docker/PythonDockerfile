@@ -15,6 +15,9 @@ ADD /docker/conf.py ./api/conf.py
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
+# https://github.com/docker/hub-feedback/issues/600#issuecomment-546057154
+RUN export GIT_COMMIT_HASH=$(cat .git/$(cat .git/HEAD | cut -d' ' -f2)) && echo $GIT_COMMIT_HASH
+
 # Run app.py when the container launches
 # Note -u means unbuffered, otherwise there is no output to the logs
 CMD ["python", "-u", "./run_server.py"]
