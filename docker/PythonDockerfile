@@ -9,6 +9,7 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 ADD /requirements.txt .
 ADD /api ./api
+ADD /grant_scope.py .
 ADD /run_server.py .
 ADD /run_whitelist.py .
 ADD /docker/conf.py ./api/conf.py
