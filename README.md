@@ -41,15 +41,6 @@ To start MongoDB:
 brew services start mongodb/brew/mongodb-community
 ```
 
-To drop any existing collections in MongoDB:
-
-```
-mongo mongodb://localhost:27017
-> use auth;
-> db.users.drop();
-> db.whitelist.drop();
-```
-
 To start the server:
 
 ```sh
@@ -62,8 +53,10 @@ The server is available on port 4000.
 
 To install MongoDB:
 
-* visit [here](https://www.mongodb.com/try/download/community?tck=docs_server)
-* username & domain as described [here](https://stackoverflow.com/questions/52092528/mongodb-community-error-when-installing-service-as-local-or-domain-user)
+* visit
+  [here](https://www.mongodb.com/try/download/community?tck=docs_server)
+* username & domain as described
+  [here](https://stackoverflow.com/questions/52092528/mongodb-community-error-when-installing-service-as-local-or-domain-user)
 
 
 To install Python 3 and the required libraries:
@@ -81,15 +74,6 @@ To start MongoDB:
 "C:\Program Files\MongoDB\Server\4.4\bin\mongo"
 ```
 
-To drop any existing collections in MongoDB:
-
-```
-mongo mongodb://localhost:27017
-> use auth;
-> db.users.drop();
-> db.whitelist.drop();
-```
-
 To start the server:
 
 ```sh
@@ -98,9 +82,10 @@ python3 run_server.py
 
 The server is available on port 4000.
 
-## Whitelisting
+## Whitelisting a User
 
-To add a user to the whitelist with email address `foo@bar.com` and a gamify flag of `true`:
+To add a user to the whitelist with email address `foo@bar.com` and a
+gamify flag of `true`:
 
 ```sh
 python run_whitelist.py add foo@bar.com true
@@ -145,7 +130,8 @@ curl -X POST http://localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.c
 
 ```
 
-This will return a token. To get all information regarding the current user:
+This will return a token. To get all information regarding the current
+user:
 
 ```sh
 curl -H "X-Token: YOUR_TOKEN_GOES_HERE" http://localhost:4000/desqol-auth/api/user
@@ -159,6 +145,14 @@ To logout:
 curl -X POST -H "X-Token: YOUR_TOKEN_GOES_HERE" http://localhost:4000/desqol-auth/api/logout
 
 ```
+
+### Tokens
+
+A token is 64 hexadecimal digits, e.g.,
+`8442f1b13728312fce04429fe90ac15235bbf2902f613f937880fff0728d56bb`. A
+token expires and is intended to be short-lived. A token expires two
+hours after login, after a logout, or if there is another login from
+the same user, generating a new token.
 
 ## add user scope in db, needed to download user event data
 
