@@ -21,7 +21,7 @@ def add_scope(db, email):
 
   user = yield get_user(db, email)
   if user is not None:
-    yield db.users.update(
+    yield db.users.update_one(
       {'email':email},
       {'$set':{'scope':"read:db"}
     })
