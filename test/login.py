@@ -24,7 +24,8 @@ class LoginHandlerTest(BaseTest):
         yield self.get_app().db.users.insert_one({
             'email': self.email,
             'passwordHash': password_hash,
-            'displayName': 'testDisplayName'
+            'displayName': 'testDisplayName',
+            'gamify': True
         })
 
     def setUp(self):

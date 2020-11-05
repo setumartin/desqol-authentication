@@ -56,7 +56,8 @@ class LoginHandler(BaseHandler):
         user = yield self.db.users.find_one({
           'email': email
         }, {
-          'passwordHash': 1
+          'passwordHash': 1,
+          'gamify': 1
         })
 
         if user is None:
@@ -78,4 +79,5 @@ class LoginHandler(BaseHandler):
         self.set_status(200)
         self.response['token'] = token['token']
         self.response['expiresIn'] = token['expiresIn']
+        self.response['gamify'] = user['gamify']
         self.write_json()
