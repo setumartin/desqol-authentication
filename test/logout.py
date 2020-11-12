@@ -39,7 +39,7 @@ class LogoutHandlerTest(BaseTest):
     def setUp(self):
         super().setUp()
 
-        self.email = 'testEmail'
+        self.email = 'test@test.com'
         self.password = 'testPassword'
         self.token = 'testToken'
 

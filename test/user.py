@@ -47,7 +47,7 @@ class UserHandlerTest(BaseTest):
     def setUp(self):
         super().setUp()
 
-        self.email = 'testEmail'
+        self.email = 'test@test.com'
         self.password = 'testPassword'
         self.display_name = 'testDisplayName'
         self.token = 'testToken'

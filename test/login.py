@@ -31,7 +31,7 @@ class LoginHandlerTest(BaseTest):
     def setUp(self):
         super().setUp()
 
-        self.email = 'testEmail'
+        self.email = 'test@test.com'
         self.password = 'testPassword'
 
         IOLoop.current().run_sync(self.register)

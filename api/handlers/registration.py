@@ -11,7 +11,7 @@ class RegistrationHandler(BaseHandler):
     def post(self):
         try:
             body = json_decode(self.request.body)
-            email = body['email']
+            email = body['email'].lower()
             if not isinstance(email, str):
                 raise Exception()
             password = body['password']

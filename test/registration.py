@@ -17,7 +17,7 @@ class RegistrationHandlerTest(BaseTest):
         super().setUpClass()
 
     def test_registration(self):
-        email = 'testEmail'
+        email = 'test@test.com'
         display_name = 'testDisplayName'
 
         body = {
@@ -35,7 +35,7 @@ class RegistrationHandlerTest(BaseTest):
 
     def test_registration_twice(self):
         body = {
-          'email': 'testEmail',
+          'email': 'test@test.com',
           'password': 'testPassword',
           'displayName': 'testDisplayName'
         }

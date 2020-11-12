@@ -28,7 +28,7 @@ class WhitelistTest(BaseTest):
     def setUp(self):
         super().setUp()
 
-        self.email = 'whitelistedEmail'
+        self.email = 'whitelisted@test.com'
 
         IOLoop.current().run_sync(self.whitelist)
 
@@ -44,7 +44,7 @@ class WhitelistTest(BaseTest):
 
     def test_registration_not_whitelisted(self):
         body = {
-          'email': 'notWhitelistedEmail',
+          'email': 'not-whitelisted@test.com',
           'password': 'testPassword',
           'displayName': 'testDisplayName'
         }
