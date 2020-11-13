@@ -49,7 +49,20 @@ class LoginHandlerTest(BaseTest):
         self.assertIsNotNone(body_2['token'])
         self.assertIsNotNone(body_2['expiresIn'])
 
-    def test_login_wrong_username(self):
+    def test_login_case_insensitive(self):
+        body = {
+          'email': self.email.swapcase(),
+          'password': self.password
+        }
+
+        response = self.fetch('/login', method='POST', body=dumps(body))
+        self.assertEqual(200, response.code)
+
+        body_2 = json_decode(response.body)
+        self.assertIsNotNone(body_2['token'])
+        self.assertIsNotNone(body_2['expiresIn'])
+
+    def test_login_wrong_email(self):
         body = {
           'email': 'wrongUsername',
           'password': self.password

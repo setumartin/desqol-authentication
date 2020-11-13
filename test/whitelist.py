@@ -42,6 +42,16 @@ class WhitelistTest(BaseTest):
         response = self.fetch('/registration', method='POST', body=dumps(body))
         self.assertEqual(200, response.code)
 
+    def test_registration_case_insensitive(self):
+        body = {
+          'email': self.email.swapcase(),
+          'password': 'testPassword',
+          'displayName': 'testDisplayName'
+        }
+
+        response = self.fetch('/registration', method='POST', body=dumps(body))
+        self.assertEqual(200, response.code)
+
     def test_registration_not_whitelisted(self):
         body = {
           'email': 'not-whitelisted@test.com',
