@@ -17,7 +17,9 @@ class RegistrationHandler(BaseHandler):
             password = body['password']
             if not isinstance(password, str):
                 raise Exception()
-            display_name = body['displayName']
+            display_name = body.get('displayName')
+            if display_name is None:
+                display_name = email
             if not isinstance(display_name, str):
                 raise Exception()
         except Exception as e:

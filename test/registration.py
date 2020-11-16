@@ -33,6 +33,21 @@ class RegistrationHandlerTest(BaseTest):
         self.assertEqual(email, body_2['email'])
         self.assertEqual(display_name, body_2['displayName'])
 
+    def test_registration_without_display_name(self):
+        email = 'test@test.com'
+
+        body = {
+          'email': email,
+          'password': 'testPassword'
+        }
+
+        response = self.fetch('/registration', method='POST', body=dumps(body))
+        self.assertEqual(200, response.code)
+
+        body_2 = json_decode(response.body)
+        self.assertEqual(email, body_2['email'])
+        self.assertEqual(email, body_2['displayName'])
+
     def test_registration_twice(self):
         body = {
           'email': 'test@test.com',
