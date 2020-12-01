@@ -35,7 +35,7 @@ class LoginHandler(BaseHandler):
     def post(self):
         try:
             body = json_decode(self.request.body)
-            email = body['email'].lower()
+            email = body['email'].lower().strip()
             if not isinstance(email, str):
                 raise Exception()
             password = body['password']

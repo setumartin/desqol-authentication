@@ -1,4 +1,5 @@
 from json import dumps
+from logging import info
 from nacl.pwhash import str as nacl_str
 from tornado.escape import json_decode, utf8
 from tornado.gen import coroutine
@@ -11,7 +12,7 @@ class RegistrationHandler(BaseHandler):
     def post(self):
         try:
             body = json_decode(self.request.body)
-            email = body['email'].lower()
+            email = body['email'].lower().strip()
             if not isinstance(email, str):
                 raise Exception()
             password = body['password']
@@ -49,6 +50,7 @@ class RegistrationHandler(BaseHandler):
         gamify = None
 
         if self.whitelist:
+            info('Attempting to register \'' + email + '\'...')
             user_2 = yield self.db.whitelist.find_one({
               'email': email
             }, {
