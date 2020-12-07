@@ -54,7 +54,7 @@ def list():
 @click.argument('email_address')
 def add(email_address):
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
-    IOLoop.current().run_sync(lambda: add_scope(db, email_address))
+    IOLoop.current().run_sync(lambda: add_scope(db, email_address.lower()))
 
 if __name__ == '__main__':
     cli()

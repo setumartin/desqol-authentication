@@ -43,7 +43,7 @@ def cli():
 @click.argument('email')
 def remove(email):
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
-    IOLoop.current().run_sync(lambda: remove_user(db, email))
+    IOLoop.current().run_sync(lambda: remove_user(db, email.lower()))
 
 @cli.command()
 def list():

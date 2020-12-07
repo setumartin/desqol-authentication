@@ -32,6 +32,18 @@ def insert_user(db, email, gamify):
     click.echo('ERROR: '  + email + ' is already whitelisted!')
 
 @coroutine
+def remove_user(db, email):
+  if not isinstance(email, str):
+    click.echo('The email address is not valid!')
+    return
+  user = yield get_user(db, email)
+  if user is None:
+    click.echo('ERROR: '  + email + ' is not whitelisted!')
+  else:
+    yield db.whitelist.delete_one(user)
+    click.echo('SUCCESS: '  + email + ' is no longer whitelisted!')
+
+@coroutine
 def get_users(db):
   cur = db.whitelist.find({}, {
     'email': 1,
@@ -51,7 +63,13 @@ def cli():
 @click.argument('gamify')
 def add(email, gamify):
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
-    IOLoop.current().run_sync(lambda: insert_user(db, email, loads(gamify.lower())))
+    IOLoop.current().run_sync(lambda: insert_user(db, email.lower(), loads(gamify.lower())))
+
+@cli.command()
+@click.argument('email')
+def remove(email):
+    db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
+    IOLoop.current().run_sync(lambda: remove_user(db, email.lower()))
 
 @cli.command()
 def list():
