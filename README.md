@@ -110,8 +110,11 @@ python run_test.py
 To check that the server is running:
 
 ```sh
+# locally
 http://localhost:4000/desqol-auth/api
 
+# or on production (no 'api' suffix) 
+curl https://jira.itcarlow.ie/desqol-auth/
 ```
 
 To register a new user:
@@ -119,6 +122,9 @@ To register a new user:
 ```sh
 curl -X POST http://localhost:4000/desqol-auth/api/registration -d '{"email":"foo@bar.com", "password":"pass", "displayName":"Mr. Foo Bar"}'
 
+
+# or on production (no 'api' suffix) 
+curl https://jira.itcarlow.ie/desqol-auth/registration -d '{"email":"foo@bar.com", "password":"pass", "displayName":"Mr. Foo Bar"}'
 ```
 
 You need to whitelist email addresses before you can register them.
@@ -128,6 +134,9 @@ To login:
 ```sh
 curl -X POST http://localhost:4000/desqol-auth/api/login -d '{"email":"foo@bar.com", "password":"pass"}'
 
+
+# or on production (no 'api' suffix) 
+curl https://jira.itcarlow.ie/desqol-auth/login -d '{"email":"foo@bar.com", "password":"pass"}'
 ```
 
 This will return a token. To get all information regarding the current
@@ -136,14 +145,18 @@ user:
 ```sh
 curl -H "X-Token: YOUR_TOKEN_GOES_HERE" http://localhost:4000/desqol-auth/api/user
 
+# or on production (no 'api' suffix) 
+curl -H "X-Token:YOUR_TOKEN_GOES_HERE" https://jira.itcarlow.ie/desqol-auth/user
 ```
 
 To logout:
 
 ```sh
-
 curl -X POST -H "X-Token: YOUR_TOKEN_GOES_HERE" http://localhost:4000/desqol-auth/api/logout
 
+
+# or on production (no 'api' suffix) 
+curl -X POST -H "X-Token: YOUR_TOKEN_GOES_HERE" https://jira.itcarlow.ie/desqol-auth/logout
 ```
 
 ### Tokens
