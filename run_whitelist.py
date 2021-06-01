@@ -1,5 +1,4 @@
 import click
-from json import loads
 from motor.motor_tornado import MotorClient
 from tornado.gen import coroutine
 from tornado.ioloop import IOLoop
@@ -16,50 +15,53 @@ def get_user(db, email):
 
 
 @coroutine
-def insert_user(db, email, gamify, usingGIP):
-  if not isinstance(email, str):
-    click.echo('The email address is not valid!')
-    return
-  if not isinstance(gamify, bool):
-    click.echo('The gamify flag is not valid!')
-    return
-  if not isinstance(gamify, bool):
-    click.echo('The usingGIP flag is not valid!')
-    return
-  user = yield get_user(db, email)
-  if user is None:
-    yield db.whitelist.insert_one({
-        'email': email,
-        'gamify': gamify,
-        'usingGIP': usingGIP
-    })
-    click.echo('SUCCESS: '  + email + ' is whitelisted!')
-  else:
-    click.echo('ERROR: '  + email + ' is already whitelisted!')
+def insert_user(db, email, gamify, using_gip):
+    if not isinstance(email, str):
+        click.echo('The email address is not valid!')
+        return
+    if not isinstance(gamify, bool):
+        click.echo('The gamify flag is not valid!')
+        return
+    if not isinstance(using_gip, bool):
+        click.echo('The usingGIP flag is not valid!')
+        return
+    user = yield get_user(db, email)
+    if user is None:
+        yield db.whitelist.insert_one({
+            'email': email,
+            'gamify': gamify,
+            'usingGIP': using_gip
+        })
+        click.echo('SUCCESS: ' + email + ' is whitelisted!')
+    else:
+        click.echo('ERROR: ' + email + ' is already whitelisted!')
+
 
 @coroutine
 def remove_user(db, email):
-  if not isinstance(email, str):
-    click.echo('The email address is not valid!')
-    return
-  user = yield get_user(db, email)
-  if user is None:
-    click.echo('ERROR: '  + email + ' is not whitelisted!')
-  else:
-    yield db.whitelist.delete_one(user)
-    click.echo('SUCCESS: '  + email + ' is no longer whitelisted!')
+    if not isinstance(email, str):
+        click.echo('The email address is not valid!')
+        return
+    user = yield get_user(db, email)
+    if user is None:
+        click.echo('ERROR: ' + email + ' is not whitelisted!')
+    else:
+        yield db.whitelist.delete_one(user)
+        click.echo('SUCCESS: ' + email + ' is no longer whitelisted!')
+
 
 @coroutine
 def get_users(db):
-  cur = db.whitelist.find({}, {
-    'email': 1,
-    'gamify': 1,
-    'usingGIP': 1
-  })
-  docs = yield cur.to_list(length=None)
-  print('There are ' + str(len(docs)) + ' users on the whitelist:')
-  for doc in docs:
-    click.echo(doc)
+    cur = db.whitelist.find({}, {
+        'email': 1,
+        'gamify': 1,
+        'usingGIP': 1
+    })
+    docs = yield cur.to_list(length=None)
+    print('There are ' + str(len(docs)) + ' users on the whitelist:')
+    for doc in docs:
+        click.echo(doc)
+
 
 @click.group()
 def cli():
