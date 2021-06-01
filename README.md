@@ -85,10 +85,12 @@ The server is available on port 4000.
 ## Whitelisting a User
 
 To add a user to the whitelist with email address `foo@bar.com` and a
-gamify flag of `true`:
+gamify flag of `false` and not using gip stick (both these flags  default to true):
 
 ```sh
-python run_whitelist.py add foo@bar.com true
+python run_whitelist.py add foo@bar.com --no-gamify --no-gip
+
+python run_whitelist.py add baz@bar.com --gamify --gip
 ```
 
 To list the users on the whitelist:
@@ -169,7 +171,7 @@ the same user, generating a new token.
 
 ## add user scope in db, needed to download user event data
 
-To grants user permission to download recordData table  with email address `foo@bar.com`:
+To grants user permission to download recordData table with email address `foo@bar.com`:
 
 ```sh
 python grant_scope.py add foo@bar.com

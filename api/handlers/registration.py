@@ -48,16 +48,21 @@ class RegistrationHandler(BaseHandler):
             return
 
         gamify = None
+        usingGIP = False
 
         if self.whitelist:
             info('Attempting to register \'' + email + '\'...')
             user_2 = yield self.db.whitelist.find_one({
               'email': email
             }, {
-              'gamify': 1
+              'gamify': 1,
+              'usingGIP': 1
             })
             if user_2:
-                gamify = user_2['gamify']
+                if 'gamify' in user_2:
+                    gamify = user_2['gamify']
+                if 'usingGIP' in user_2:
+                    usingGIP = user_2['usingGIP']
             else:
                 self.send_error(403, message='The email address is not on the whitelist!')
                 return
@@ -69,10 +74,12 @@ class RegistrationHandler(BaseHandler):
             'passwordHash': password_hash,
             'displayName': display_name,
             'gamify': gamify,
+            'usingGIP': usingGIP
         })
 
         self.set_status(200)
         self.response['email'] = email
         self.response['displayName'] = display_name
         self.response['gamify'] = gamify
+        self.response['usingGIP'] = usingGIP
         self.write_json()

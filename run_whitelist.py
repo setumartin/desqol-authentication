@@ -6,26 +6,32 @@ from tornado.ioloop import IOLoop
 
 from api.conf import MONGODB_HOST, MONGODB_DBNAME, WHITELIST
 
-@coroutine
-def get_user(db, email):
-  user = yield db.whitelist.find_one({
-    'email': email
-  }, {})
-  return user
 
 @coroutine
-def insert_user(db, email, gamify):
+def get_user(db, email):
+    user = yield db.whitelist.find_one({
+        'email': email
+    }, {})
+    return user
+
+
+@coroutine
+def insert_user(db, email, gamify, usingGIP):
   if not isinstance(email, str):
     click.echo('The email address is not valid!')
     return
   if not isinstance(gamify, bool):
     click.echo('The gamify flag is not valid!')
     return
+  if not isinstance(gamify, bool):
+    click.echo('The usingGIP flag is not valid!')
+    return
   user = yield get_user(db, email)
   if user is None:
     yield db.whitelist.insert_one({
         'email': email,
-        'gamify': gamify
+        'gamify': gamify,
+        'usingGIP': usingGIP
     })
     click.echo('SUCCESS: '  + email + ' is whitelisted!')
   else:
@@ -47,7 +53,8 @@ def remove_user(db, email):
 def get_users(db):
   cur = db.whitelist.find({}, {
     'email': 1,
-    'gamify': 1
+    'gamify': 1,
+    'usingGIP': 1
   })
   docs = yield cur.to_list(length=None)
   print('There are ' + str(len(docs)) + ' users on the whitelist:')
@@ -58,12 +65,15 @@ def get_users(db):
 def cli():
     pass
 
+
 @cli.command()
 @click.argument('email')
-@click.argument('gamify')
-def add(email, gamify):
+@click.option('--gamify/--no-gamify', default=True)
+@click.option('--gip/--no-gip', default=True)
+def add(email, gamify, gip):
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
-    IOLoop.current().run_sync(lambda: insert_user(db, email.lower(), loads(gamify.lower())))
+    IOLoop.current().run_sync(lambda: insert_user(db, email.lower(), gamify, gip))
+
 
 @cli.command()
 @click.argument('email')
@@ -71,10 +81,12 @@ def remove(email):
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
     IOLoop.current().run_sync(lambda: remove_user(db, email))
 
+
 @cli.command()
 def list():
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
     IOLoop.current().run_sync(lambda: get_users(db))
+
 
 if __name__ == '__main__':
     cli()

@@ -8,6 +8,7 @@ from test.user import UserHandlerTest
 from test.welcome import WelcomeHandlerTest
 
 from test.whitelist import WhitelistTest
+from test.usingGIP import UsingGIPTest
 
 if __name__ == '__main__':
     logging.getLogger('tornado.access').disabled = True
