@@ -15,7 +15,7 @@ def get_user(db, email):
 
 
 @coroutine
-def insert_user(db, email, gamify, using_gip):
+def insert_user(db, email, gamify, using_gip, gip3days):
     if not isinstance(email, str):
         click.echo('The email address is not valid!')
         return
@@ -25,12 +25,16 @@ def insert_user(db, email, gamify, using_gip):
     if not isinstance(using_gip, bool):
         click.echo('The usingGIP flag is not valid!')
         return
+    if not isinstance(gip3days, bool):
+        click.echo('The gip3days flag is not valid!')
+        return
     user = yield get_user(db, email)
     if user is None:
         yield db.whitelist.insert_one({
             'email': email,
             'gamify': gamify,
-            'usingGIP': using_gip
+            'usingGIP': using_gip,
+            'gip3PerWeek': gip3days
         })
         click.echo('SUCCESS: ' + email + ' is whitelisted!')
     else:
@@ -55,7 +59,8 @@ def get_users(db):
     cur = db.whitelist.find({}, {
         'email': 1,
         'gamify': 1,
-        'usingGIP': 1
+        'usingGIP': 1,
+        'gip3PerWeek': 1
     })
     docs = yield cur.to_list(length=None)
     print('There are ' + str(len(docs)) + ' users on the whitelist:')
@@ -72,9 +77,10 @@ def cli():
 @click.argument('email')
 @click.option('--gamify/--no-gamify', default=True)
 @click.option('--gip/--no-gip', default=True)
-def add(email, gamify, gip):
+@click.option('--gip3days', default=False, is_flag=True)
+def add(email, gamify, gip, gip3days):
     db = MotorClient(**MONGODB_HOST)[MONGODB_DBNAME]
-    IOLoop.current().run_sync(lambda: insert_user(db, email.lower(), gamify, gip))
+    IOLoop.current().run_sync(lambda: insert_user(db, email.lower(), gamify, gip, gip3days))
 
 
 @cli.command()

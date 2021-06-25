@@ -12,6 +12,9 @@ The `desqol-authentication` server requires Python 3 and MongoDB.
 ```sh
 docker-compose build
 docker-compose up
+
+#if you need a shell 
+docker-compose run auth-server sh
 ```
 
 The server is available on port 4000.
@@ -90,7 +93,14 @@ gamify flag of `false` and not using gip stick (both these flags  default to tru
 ```sh
 python run_whitelist.py add foo@bar.com --no-gamify --no-gip
 
+If a user is gip testing every day:
+ 
 python run_whitelist.py add baz@bar.com --gamify --gip
+
+If a user is gip testing 3 days week: 
+
+python run_whitelist.py add baz@bar.com --gamify --gip3days
+
 ```
 
 To list the users on the whitelist:
