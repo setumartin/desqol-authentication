@@ -49,6 +49,7 @@ class RegistrationHandler(BaseHandler):
 
         gamify = None
         usingGIP = False
+        gip3PerWeek = False
 
         if self.whitelist:
             info('Attempting to register \'' + email + '\'...')
@@ -56,13 +57,16 @@ class RegistrationHandler(BaseHandler):
               'email': email
             }, {
               'gamify': 1,
-              'usingGIP': 1
+              'usingGIP': 1,
+              'gip3PerWeek': 1
             })
             if user_2:
                 if 'gamify' in user_2:
                     gamify = user_2['gamify']
                 if 'usingGIP' in user_2:
                     usingGIP = user_2['usingGIP']
+                if 'gip3PerWeek' in user_2:
+                    gip3PerWeek = user_2['gip3PerWeek']
             else:
                 self.send_error(403, message='The email address is not on the whitelist!')
                 return
@@ -74,7 +78,8 @@ class RegistrationHandler(BaseHandler):
             'passwordHash': password_hash,
             'displayName': display_name,
             'gamify': gamify,
-            'usingGIP': usingGIP
+            'usingGIP': usingGIP,
+            'gip3PerWeek': gip3PerWeek
         })
 
         self.set_status(200)
@@ -82,4 +87,6 @@ class RegistrationHandler(BaseHandler):
         self.response['displayName'] = display_name
         self.response['gamify'] = gamify
         self.response['usingGIP'] = usingGIP
+        self.response['gip3PerWeek'] = gip3PerWeek
+
         self.write_json()

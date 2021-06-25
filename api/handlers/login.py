@@ -58,7 +58,8 @@ class LoginHandler(BaseHandler):
         }, {
           'passwordHash': 1,
           'gamify': 1,
-          'usingGIP': 1
+          'usingGIP': 1,
+          'gip3PerWeek': 1
         })
 
         if user is None:
@@ -82,5 +83,6 @@ class LoginHandler(BaseHandler):
         self.response['expiresIn'] = token['expiresIn']
         self.response['gamify'] = user['gamify']
         self.response['usingGIP'] = user.get('usingGIP', False)
+        self.response['gip3PerWeek'] = user.get('gip3PerWeek', False)
 
         self.write_json()

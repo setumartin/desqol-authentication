@@ -31,13 +31,24 @@ class UsingGIPTest(BaseTest):
         }, {
             'email': self.legacyEmail.lower(),
             'gamify': True,
-        }])
+        }, {
+            'email': self.usingGipEveryDayEmail.lower(),
+            'usingGIP': True,
+            'gip3PerWeek': False
+        }, {
+            'email': self.usingGip3DaysEmail.lower(),
+            'usingGIP': True,
+            'gip3PerWeek': True
+        }
+        ])
 
 
     def setUp(self):
         super().setUp()
 
         self.usingGipEmail = 'usingGipEmail@test.com'
+        self.usingGipEveryDayEmail = 'usingGipEveryDayEmail@test.com'
+        self.usingGip3DaysEmail = 'usingGip3DaysEmail@test.com'
         self.notUsingGipEmail = 'notUsingGipEmail@test.com'
         self.legacyEmail = 'legacyEmail@test.com'
         self.password = 'testPassword'
@@ -124,3 +135,58 @@ class UsingGIPTest(BaseTest):
         body = json_decode(response.body)
         print(body)
         self.assertFalse(body['usingGIP'])
+
+    def test_login_GIP_EveryDay(self):
+        register_body = {
+            'email': self.usingGipEveryDayEmail,
+            'password': self.password,
+            'displayName': 'testDisplayName'
+        }
+
+        response = self.fetch('/registration', method='POST', body=dumps(register_body))
+
+        body = json_decode(response.body)
+        print("test_login_GIP_EveryDay")
+        print(body)
+        self.assertTrue(body['usingGIP'])
+        self.assertFalse(body['gip3PerWeek'])
+
+        login_body = {
+            'email': self.usingGipEveryDayEmail,
+            'password': self.password,
+        }
+
+        response = self.fetch('/login', method='POST', body=dumps(login_body))
+        self.assertEqual(200, response.code)
+
+        body = json_decode(response.body)
+        self.assertTrue(body['usingGIP'])
+        self.assertFalse(body['gip3PerWeek'])
+
+    def test_login_GIP_3_Days(self):
+        register_body = {
+            'email': self.usingGip3DaysEmail,
+            'password': self.password,
+            'displayName': 'testDisplayName'
+        }
+
+        response = self.fetch('/registration', method='POST', body=dumps(register_body))
+
+        body = json_decode(response.body)
+        print("test_login_GIP_EveryDay")
+        print(body)
+        self.assertTrue(body['usingGIP'])
+        self.assertTrue(body['gip3PerWeek'])
+
+        login_body = {
+            'email': self.usingGip3DaysEmail,
+            'password': self.password,
+        }
+
+        response = self.fetch('/login', method='POST', body=dumps(login_body))
+        self.assertEqual(200, response.code)
+
+        body = json_decode(response.body)
+        self.assertTrue(body['usingGIP'])
+        self.assertTrue(body['gip3PerWeek'])
+
